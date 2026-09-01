@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Acadêmico - IFMA</title>
+   
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <img src="logo.jpeg" alt="Logo IFMA" class="logo-superior">
+
+    <!-- 1. CONTAINER DE LOGIN -->
+    <div class="container" id="loginContainer">
+        <div class="left-side">
+            <div class="logo">
+                <h1>IFMA</h1>
+                <h2>Portal de Horários</h2>
+            </div>
+            <div class="descricao">
+                <p>Acesse o sistema utilizando suas credenciais institucionais do SUAP para consultar suas salas, disciplinas, horários acadêmicos e turmas atualizadas.</p>
+            </div>
+            <div class="imagem">
+                <img src="imagem.png" alt="Ilustração Campus">
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="login-box">
+                <h1>Entrar</h1>
+                <div class="subtitulo">Conecte-se com sua conta SUAP</div>
+                
+                <div id="msgErro" class="error-msg"></div>
+
+                <form id="loginForm">
+                    <label for="matricula">Matrícula</label>
+                    <input type="text" id="matricula" placeholder="Digite sua matrícula" required>
+                    
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" placeholder="Digite sua senha" required>
+                    
+                    <button type="submit">Acessar Sistema</button>
+                </form>
+                <a href="#" class="link">Esqueceu sua senha?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CONTAINER DO DASHBOARD (CAIXAS ARREDONDADAS DO SEU PRINT) -->
+    <div id="dashboardContainer">
+        <div class="dash-header">
+            <h2>Painel do Sistema de Horários</h2>
+            <div class="user-info">
+                <p>Usuário: <span id="dashMatricula"></span> | Perfil: <span id="dashPerfil"></span> <button class="btn-logout" id="btnSair">Sair</button></p>
+            </div>
+        </div>
+
+      <div id="blocoServidor">
+    <h3>⚙️ Painel Gerencial do Servidor</h3>
+    <p>Menu de gerenciamento ativo. Você possui permissões para importar arquivos XML.</p>
+
+    <!-- BOTÃO IMPORTAR -->
+    <form action="#" method="post" enctype="multipart/form-data">
+        <label for="arquivoXML">Arquivo XML:</label>
+        <input type="file"
+               id="arquivoXML"
+               name="arquivoXML"
+               accept=".xml,application/xml"
+               required>
+
+        <button type="submit">📥 Importar</button>
+    </form>
+
+    <!-- BOTÃO EXPORTAR -->
+    <form action="#" method="get">
+        <button type="submit">📤 Exportar</button>
+    </form>
+</div>
+
+        <div class="filtro-secao">
+            <label for="filtroCurso">Selecione o Curso para visualizar a Grade:</label>
+            <select id="filtroCurso">
+                <option value="informatica">Informática</option>
+                <option value="adm">Administração</option>
+                <option value="jogos">Jogos Digitais</option>
+                <option value="eletro">EletroEletrônica</option>
+            </select>
+
+            <label for="filtroSemestre" style="margin-left: 20px;">Período Letivo:</label>
+            <select id="filtroSemestre">
+                <option value="atual">Semestre Atual</option>
+                <option value="proximo" selected>Próximo Semestre</option>
+                <option value="2026.1">Semestre Passado (2026.1)</option>
+            </select>
+        </div>
+
+        <!-- MOLDURA CAIXA BRANCA UNIFICADA PARA O TÍTULO E A TABELA -->
+        <div class="grade-container-branca">
+            <h2 id="tituloGrade">Horários e Disciplinas</h2>
+            <div class="tabela-container">
+                <table class="tabela-horarios">
+                    <thead>
+                        <tr>
+                            <th>Horário (Turno)</th>
+                            <th>Segunda-feira</th>
+                            <th>Terça-feira</th>
+                            <th>Quarta-feira</th>
+                            <th>Quinta-feira</th>
+                            <th>Sexta-feira</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaHorarios">
+                        <!-- Linhas geradas via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- INTEGRAÇÃO DO JAVASCRIPT -->
+    <script>
+        const bancoHorarios = {
+            informatica: {
+                atual: [{ hora: "07:30 - 08:20", seg: "Introdução à Computação<span class='professor'>Prof. Alan</span>", ter: "Algoritmos I<span class='professor'>Prof. Carlos</span>", qua: "Matemática Discreta<span class='professor'>Prof. José</span>", qui: "Algoritmos I<span class='professor'>Prof. Carlos</span>", sex: "Inglês Técnico<span class='professor'>Prof. Valter</span>" }],
+                proximo: [
+                    { hora: "07:30 - 08:20", seg: "Algoritmos<span class='professor'>Prof. Carlos</span>", ter: "Banco de Dados<span class='professor'>Prof. Ana</span>", qua: "Matemática<span class='professor'>Prof. José</span>", qui: "Algoritmos<span class='professor'>Prof. Carlos</span>", sex: "Física<span class='professor'>Prof. Marcos</span>" },
+                    { hora: "08:20 - 09:10", seg: "Algoritmos<span class='professor'>Prof. Carlos</span>", ter: "Banco de Dados<span class='professor'>Prof. Ana</span>", qua: "Matemática<span class='professor'>Prof. José</span>", qui: "Redes de Computadores<span class='professor'>Prof. Roberto</span>", sex: "Física<span class='professor'>Prof. Marcos</span>" }
+                ],
+                "2026.1": [{ hora: "07:30 - 08:20", seg: "Fundamentos de TI<span class='professor'>Prof. Marcelo</span>", ter: "Lógica Aplicada<span class='professor'>Prof. Bruno</span>", qua: "Metodologia Científica<span class='professor'>Prof. Kátia</span>", qui: "Fundamentos de TI<span class='professor'>Prof. Marcelo</span>", sex: "Sociologia<span class='professor'>Prof. Rita</span>" }]
+            },
+            adm: {
+                atual: [{ hora: "07:30 - 08:20", seg: "Teoria da Adm.<span class='professor'>Prof. Ricardo</span>", ter: "Matemática Financeira<span class='professor'>Prof. Sergio</span>", qua: "Comunicação Org.<span class='professor'>Prof. Aline</span>", qui: "Teoria da Adm.<span class='professor'>Prof. Ricardo</span>", sex: "Metodologia<span class='professor'>Prof. Sandra</span>" }],
+                proximo: [{ hora: "07:30 - 08:20", seg: "Contabilidade<span class='professor'>Prof. Julia</span>", ter: "Gestão de Pessoas<span class='professor'>Prof. Ricardo</span>", qua: "Economia<span class='professor'>Prof. Sergio</span>", qui: "Contabilidade<span class='professor'>Prof. Julia</span>", sex: "Direito<span class='professor'>Prof. Sandra</span>" }],
+                "2026.1": [{ hora: "07:30 - 08:20", seg: "Introdução à Adm.<span class='professor'>Prof. Ricardo</span>", ter: "Sociologia das Org.<span class='professor'>Prof. Sandra</span>", qua: "Estatística Básica<span class='professor'>Prof. Sergio</span>", qui: "Introdução à Adm.<span class='professor'>Prof. Ricardo</span>", sex: "Filosofia<span class='professor'>Prof. Rita</span>" }]
+            },
+            jogos: {
+                atual: [{ hora: "07:30 - 08:20", seg: "História dos Jogos<span class='professor'>Prof. Carla</span>", ter: "Lógica de Jogos<span class='professor'>Prof. Lucas</span>", qua: "Desenho Vetorial<span class='professor'>Prof. Bruno</span>", qui: "Lógica de Jogos<span class='professor'>Prof. Lucas</span>", sex: "Roteirização<span class='professor'>Prof. Amanda</span>" }],
+                proximo: [{ hora: "07:30 - 08:20", seg: "Modelagem 3D<span class='professor'>Prof. Bruno</span>", ter: "Roteiro e Narrativa<span class='professor'>Prof. Carla</span>", qua: "Motores de Jogos<span class='professor'>Prof. Diego</span>", qui: "Modelagem 3D<span class='professor'>Prof. Bruno</span>", sex: "Programação de Jogos<span class='professor'>Prof. Lucas</span>" }],
+                "2026.1": [{ hora: "07:30 - 08:20", seg: "Pixel Art<span class='professor'>Prof. Bruno</span>", ter: "Matemática para Jogos<span class='professor'>Prof. Diego</span>", qua: "Game Design I<span class='professor'>Prof. Carla</span>", qui: "Pixel Art<span class='professor'>Prof. Bruno</span>", sex: "Ética e Jogos<span class='professor'>Prof. Amanda</span>" }]
+            },
+            eletro: {
+                atual: [{ hora: "07:30 - 08:20", seg: "Eletricidade Básica<span class='professor'>Prof. Fernando</span>", ter: "Desenho Técnico<span class='professor'>Prof. Marcio</span>", qua: "Química Geral<span class='professor'>Prof. Patricia</span>", qui: "Eletricidade Básica<span class='professor'>Prof. Fernando</span>", sex: "Física Aplicada<span class='professor'>Prof. Fabio</span>" }],
+                proximo: [{ hora: "07:30 - 08:20", seg: "Circuitos Elétricos<span class='professor'>Prof. Fernando</span>", ter: "Automação<span class='professor'>Prof. Patricia</span>", qua: "Instalações<span class='professor'>Prof. Marcio</span>", qui: "Circuitos Elétricos<span class='professor'>Prof. Fernando</span>", sex: "Eletrônica Digital<span class='professor'>Prof. Fabio</span>" }],
+                "2026.1": [{ hora: "07:30 - 08:20", seg: "Segurança em Elétrica<span class='professor'>Prof. Fernando</span>", ter: "Introdução à Eng.<span class='professor'>Prof. Marcio</span>", qua: "Cálculo Vetorial<span class='professor'>Prof. Igor</span>", qui: "Segurança em Elétrica<span class='professor'>Prof. Fernando</span>", sex: "Instrumentação<span class='professor'>Prof. Fabio</span>" }]
+            }
+        };
+
+        function carregarTabelaHorarios(curso, semestre) {
+            const corpoTabela = document.getElementById('corpoTabelaHorarios');
+            const tituloGrade = document.getElementById('tituloGrade');
+            const nomesCursos = { informatica: "Informática", adm: "Administração (ADM)", jogos: "Jogos Digitais", eletro: "EletroEletrônica" };
+            const nomesSemestres = { atual: "Semestre Atual", proximo: "Próximo Semestre", "2026.1": "Semestre Passado (2026.1)" };
+            
+            tituloGrade.textContent = `Horários e Disciplinas: ${nomesCursos[curso]} (${nomesSemestres[semestre]})`;
+            corpoTabela.innerHTML = "";
+            
+            if (bancoHorarios[curso] && bancoHorarios[curso][semestre]) {
+                bancoHorarios[curso][semestre].forEach(linha => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td><strong>${linha.hora}</strong></td><td class="materia">${linha.seg}</td><td class="materia">${linha.ter}</td><td class="materia">${linha.qua}</td><td class="materia">${linha.qui}</td><td class="materia">${linha.sex}</td>`;
+                    corpoTabela.appendChild(tr);
+                });
+            } else {
+                corpoTabela.innerHTML = `<tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado.</td></tr>`;
+            }
+        }
+
+        function atualizarVisualizacao() {
+            const cursoSelecionado = document.getElementById('filtroCurso').value;
+            const semestreSelecionado = document.getElementById('filtroSemestre').value;
+            carregarTabelaHorarios(cursoSelecionado, semestreSelecionado);
+        }
+
+        document.getElementById('filtroCurso').addEventListener('change', atualizarVisualizacao);
+        document.getElementById('filtroSemestre').addEventListener('change', atualizarVisualizacao);
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const matricula = document.getElementById('matricula').value;
+            const senha = document.getElementById('senha').value;
+            const msgErro = document.getElementById('msgErro');
+
+            if (!senha || senha.trim().length < 4) {
+                msgErro.textContent = "Matrícula ou senha incorreta no SUAP.";
+                msgErro.style.display = "block";
+                return;
+            }
+
+            msgErro.style.display = "none";
+            let perfil = "Aluno";
+            if (matricula.startsWith("20")) perfil = "Aluno";
+            else if (matricula.startsWith("10")) perfil = "Professor";
+            else if (matricula.startsWith("00")) perfil = "Servidor";
+
+            document.body.classList.add('dashboard-ativo');
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('dashboardContainer').style.display = 'block';
+
+            document.getElementById('dashMatricula').textContent = matricula;
+            document.getElementById('dashPerfil').textContent = perfil;
+
+           document.getElementById('blocoServidor').style.display = 'block';
+            atualizarVisualizacao();
+        });
+
+        document.getElementById('btnSair').addEventListener('click', function() {
+            document.body.classList.remove('dashboard-ativo');
+            document.getElementById('dashboardContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('matricula').value = "";
+            document.getElementById('senha').value = "";
+        });
+    </script>
+</body>
+</html>

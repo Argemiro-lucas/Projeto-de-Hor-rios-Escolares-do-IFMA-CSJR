@@ -1,0 +1,353 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Estado Inicial: Centraliza o Login e mantém fundo institucional verde */
+body {
+    background-color: #006633; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    transition: background-color 0.2s ease;
+}
+
+/* Quando o dashboard ativa, alinha o conteúdo no topo, mas mantém o centro */
+body.dashboard-ativo {
+    align-items: flex-start;  
+    padding-top: 60px; 
+}
+
+/* Container do Login */
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 950px;
+    background-color: transparent; 
+    gap: 60px;
+    align-items: center; 
+}
+
+.left-side {
+    flex: 1.2;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.logo h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+}
+
+.logo h2 {
+    font-size: 24px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.descricao p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.imagem {
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; 
+}
+
+.imagem img {
+    width: 100%;
+    max-width: 420px; 
+    height: auto;
+    max-height: 320px; 
+    object-fit: contain;
+    opacity: 0.95;
+}
+
+.right-side {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 320px;
+    background-color: transparent; 
+}
+
+.login-box h1 {
+    color: #ffffff; 
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.subtitulo {
+    color: rgba(255, 255, 255, 0.7); 
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form label {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: -10px; 
+}
+
+form input {
+    width: 100%;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333333;
+    background-color: #ffffff;
+    height: 36px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+form input:focus {
+    border-color: #66afe9; 
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    background-color: #004d26; 
+    color: #ffffff;
+    border: 1px solid #00331a;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.15s;
+    margin-top: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+form button:hover {
+    background-color: #00331a;
+}
+
+.link {
+    display: block;
+    text-align: left; 
+    margin-top: 15px;
+    color: #8ec3eb;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.error-msg {
+    color: #ffcccc;
+    background-color: rgba(255, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    display: none;
+}
+
+.logo-superior { 
+    position: fixed; 
+    top: 20px; 
+    left: 20px; 
+    max-width: 90px; 
+    height: auto; 
+    z-index: 10; 
+}
+
+/* ==========================================================================
+   ESTILOS DO DASHBOARD (IDÊNTICOS AO SEU PRINT)
+   ========================================================================== */
+
+/* Container Principal do Dashboard: Centralizado com largura controlada */
+#dashboardContainer {
+    width: 100%;
+    max-width: 950px; 
+    margin: 0 auto;
+    display: none;
+}
+
+/* Barra superior verde escura arredondada do usuário */
+.dash-header {
+    background-color: #004d26; 
+    padding: 18px 24px;
+    border-radius: 12px; 
+    margin-bottom: 20px;
+    border: 1px solid #00331a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dash-header h2 {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user-info p {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.user-info span {
+    font-weight: bold;
+}
+
+.btn-logout {
+    background-color: #b71c1c;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Bloco exclusivo do perfil Servidor */
+#blocoServidor {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    display: none;
+}
+
+/* Caixa branca arredondada de Filtros (Selecione o Curso...) */
+.filtro-secao { 
+    background-color: #ffffff; 
+    padding: 20px 24px; 
+    border-radius: 12px; 
+    border: 1px solid #e0e0e0; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filtro-secao label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.filtro-secao select { 
+    padding: 8px 16px; 
+    font-size: 14px; 
+    border-radius: 6px; 
+    border: 1px solid #cccccc; 
+    background-color: #ffffff;
+    color: #333333;
+    outline: none;
+}
+
+/* Moldura Branca Arredondada que envolve o título e a tabela */
+.grade-container-branca {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px; 
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+#tituloGrade {
+    margin-bottom: 18px; 
+    color: #333333; 
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Tabela de Horários */
+.tabela-horarios { 
+    width: 100%; 
+    border-collapse: collapse; 
+    background-color: #ffffff; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    border: 1px solid #e0e0e0;
+}
+
+.tabela-horarios th, .tabela-horarios td { 
+    padding: 14px; 
+    border: 1px solid #e0e0e0; 
+    text-align: center; 
+    font-size: 14px; 
+}
+
+/* Cabeçalho verde da tabela */
+.tabela-horarios th { 
+    background-color: #2e7d32; 
+    color: #ffffff; 
+    font-weight: bold;
+}
+
+.tabela-horarios tr:nth-child(even) { 
+    background-color: #fcfcfc; 
+}
+
+.materia { 
+    font-weight: bold; 
+    color: #2e7d32; 
+}
+
+.professor { 
+    font-size: 12px; 
+    color: #666666; 
+    display: block; 
+    margin-top: 4px; 
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .container { flex-direction: column; gap: 30px; }
+    .imagem { display: none; }
+    .filtro-secao { flex-direction: column; align-items: flex-start; }
+    .filtro-secao select { margin-left: 0; width: 100%; }
+    .dash-header { flex-direction: column; gap: 15px; text-align: center; }
+}
