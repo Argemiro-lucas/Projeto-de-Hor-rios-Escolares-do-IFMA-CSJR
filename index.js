@@ -209,9 +209,57 @@ if (loginForm) {
         document.getElementById('dashMatricula').textContent = matricula;
         document.getElementById('dashPerfil').textContent = perfil;
         
+              // ... final do evento de login submit do seu arquivo anterior
+
         atualizarVisualizacao();
     });
 }
+
+// =========================================================================
+// CONTROLE DE NAVEGAÇÃO DO MENU LATERAL BASEADO NAS REGRAS DO SUAP
+// =========================================================================
+function inicializarMenuLateral() {
+    const itensMenu = document.querySelectorAll('.menu-item');
+    if (!itensMenu) return;
+
+    itensMenu.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetPainel = this.getAttribute('data-target');
+            const perfilUsuario = sessionStorage.getItem('perfil'); // Captura se é Aluno, Professor ou Servidor
+
+            if (targetPainel === 'professor') {
+                if (perfilUsuario === 'Professor' || perfilUsuario === 'Servidor') {
+                    window.location.href = 'professor.html';
+                } else {
+                    alert('Acesso negado: Este painel é restrito para Professores e Servidores.');
+                }
+            } 
+            
+            else if (targetPainel === 'servidor') {
+                if (perfilUsuario === 'Servidor') {
+                    window.location.href = 'adm.html';
+                } else {
+                    alert('Acesso negado: Este painel é de uso exclusivo da equipe de Servidores.');
+                }
+            }
+            
+            else if (targetPainel === 'aluno') {
+                // Se já estiver logado no index e for aluno, apenas mantém na tela
+                if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+                    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                } else {
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+    });
+}
+
+// Dispara a montagem do menu ao carregar a página
+document.addEventListener("DOMContentLoaded", inicializarMenuLateral);
 
 // Chamada protegida da função externa de logout
 if (typeof configurarBotaoSair === "function") {
