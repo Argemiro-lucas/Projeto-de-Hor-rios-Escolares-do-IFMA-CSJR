@@ -127,11 +127,11 @@ function carregarMapaSalas() {
 
     // Simula a relação de salas físicas cadastradas e integradas a partir do SUAP
     const salasCampus = [
-        { sala: "Sala 101 - Bloco A", curso: "Informática", prof: "Prof. Carlos Silva", status: "Em Uso" },
-        { sala: "Sala 102 - Bloco A", curso: "Administração", prof: "Prof. Ricardo Santos", status: "Em Uso" },
+        { sala: "Sala 01 - Bloco A", curso: "Informática", prof: "Prof. Carlos Silva", status: "Em Uso" },
+        { sala: "Sala 02 - Bloco A", curso: "Administração", prof: "Prof. Ricardo Santos", status: "Em Uso" },
         { sala: "Lab. Informática I", curso: "Jogos Digitais", prof: "Prof. Lucas Lima", status: "Em Uso" },
         { sala: "Lab. Eletrônica", curso: "EletroEletrônica", prof: "Prof. Fernando Costa", status: "Em Uso" },
-        { sala: "Auditório Central", curso: "- Nenhum -", prof: "- Livre -", status: "Disponível" }
+        { sala: "Auditório ", curso: "- Nenhum -", prof: "- Livre -", status: "Disponível" }
     ];
 
     let mapaHTML = "";
