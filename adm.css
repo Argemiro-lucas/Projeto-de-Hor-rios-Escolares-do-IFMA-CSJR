@@ -32,14 +32,14 @@ body {
     color: var(--cinza-secundario);
 }
 
-/* Ajustado para seguir o padrão de caixas brancas do seu portal */
+/* CORREÇÃO AQUI: Mudado para caixa branca com texto escuro para dar leitura */
 #blocoServidor {
     background-color: var(--branco);
     box-shadow: var(--sombra-padrao);
     padding: var(--espaco-lg);
     border-radius: var(--borda-radius-lg);
     margin-bottom: var(--espaco-lg);
-    color: #333333; /* Texto escuro para dar leitura perfeita no fundo branco */
+    color: var(--cinza-texto);
 }
 
 #blocoServidor h3 {
@@ -73,9 +73,9 @@ body {
 #blocoServidor select {
     padding: 6px 10px;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: white;
-    color: black;
+    border: 1px solid var(--cinza-borda);
+    background-color: var(--branco);
+    color: var(--cinza-texto);
 }
 
 #statusImportacao {
