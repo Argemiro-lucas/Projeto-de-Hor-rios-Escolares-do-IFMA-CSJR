@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - IFMA</title>
+    <link rel="stylesheet" href="variaveis.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="adm.css">
+</head>
+<body class="dashboard-ativo">
 
+    <div id="dashboardContainer" style="display:block;">
+        <div class="dash-header">
+            <h2>Painel Administrativo</h2>
+            <div class="user-info">
+                <p>Usuário: <span id="dashMatricula"></span> | Perfil: <span id="dashPerfil"></span>
+                <button class="btn-logout" id="btnSair">Sair</button></p>
+            </div>
+        </div>
+
+        <!-- T5.1: Painel Administrativo (atalhos e contadores) -->
+        <section class="cards-resumo">
+            <div class="card-resumo">
+                <span class="card-numero">4</span>
+                <span class="card-label">Cursos ativos</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-numero">--</span>
+                <span class="card-label">Professores cadastrados</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-numero">--</span>
+                <span class="card-label">Salas em uso</span>
+            </div>
+        </section>
+
+        <!-- Painel Gerencial: Importar/Exportar -->
+        <div id="blocoServidor">
+            <h3>⚙️ Painel Gerencial do Servidor</h3>
+            <p>Menu de gerenciamento ativo. Você possui permissões para importar arquivos XML.</p>
+
+            <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
+                <label for="arquivoXML">Arquivo XML:</label>
+                <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
+                <button type="submit">📥 Importar</button>
+                <div id="statusImportacao"></div>
+            </form>
+
+            <div class="exportar-selecao">
+                <label for="exportCurso">Curso:</label>
+                <select id="exportCurso">
+                    <option value="informatica">Informática</option>
+                    <option value="adm">Administração</option>
+                    <option value="jogos">Jogos Digitais</option>
+                    <option value="eletro">EletroEletrônica</option>
+                </select>
+                <label for="exportSemestre">Semestre:</label>
+                <select id="exportSemestre">
+                    <option value="atual">Semestre Atual</option>
+                    <option value="proximo">Próximo Semestre</option>
+                    <option value="2026.1">Semestre Passado (2026.1)</option>
+                </select>
+            </div>
+
+            <form id="formExportar" action="#" method="get">
+                <button type="submit">📤 Exportar</button>
+            </form>
+        </div>
+
+        <!-- T5.2: Sincronização SUAP -->
+        <div class="grade-container-branca">
+            <h2>Sincronização com o SUAP</h2>
+            <div class="botoes-sync">
+                <button type="button" class="btn-sync">Importar Professores</button>
+                <button type="button" class="btn-sync">Atualizar Salas</button>
+                <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
+            </div>
+            <p class="sync-status">Última sincronização: <em>nunca (Fase 5)</em></p>
+        </div>
+
+        <!-- T5.3: Validador de Conflitos -->
+        <div class="grade-container-branca">
+            <h2>Validação de Conflitos</h2>
+            <div class="alerta-conflito alerta-warning">
+              ⚠️ Nenhum conflito detectado no momento. (placeholder Fase 5)
+            </div>
+        </div>
+    </div>
+
+        <!-- Primeiro carrega o comum, depois o específico -->
+    <script src="comum.js"></script>
+    <script src="adm.js"></script>
+
+</body>
+</html>
