@@ -1,27 +1,22 @@
 :root {
-    /* Cores institucionais (extraídas do CSS atual) */
-    --verde-fundo: #006633;        /* fundo da tela de login */
-    --verde-escuro: #004d26;       /* botões, cabeçalho do dashboard */
-    --verde-escuro-hover: #00331a; /* hover dos botões / bordas */
-    --verde-tabela: #2e7d32;       /* cabeçalho da tabela, texto de matéria */
-    --vermelho-alerta: #b71c1c;    /* botão sair */
+    --verde-fundo: #006633;
+    --verde-escuro: #004d26;
+    --verde-escuro-hover: #00331a;
+    --verde-tabela: #2e7d32;
+    --vermelho-alerta: #b71c1c;
 
-    /* Tons de cinza e neutros */
     --cinza-texto: #333333;
     --cinza-secundario: #666666;
     --cinza-borda: #e0e0e0;
     --branco: #ffffff;
 
-    /* Tipografia (mantendo a fonte já usada no projeto) */
     --fonte-padrao: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    /* Espaçamento padrão */
     --espaco-xs: 4px;
     --espaco-sm: 8px;
     --espaco-md: 16px;
     --espaco-lg: 24px;
 
-    /* Bordas e sombras */
     --borda-radius: 8px;
     --borda-radius-lg: 12px;
     --sombra-padrao: 0 4px 12px rgba(0, 0, 0, 0.05);
