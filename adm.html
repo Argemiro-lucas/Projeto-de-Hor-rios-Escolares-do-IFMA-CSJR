@@ -35,36 +35,10 @@
             </div>
         </section>
 
-        <!-- 1. FORMULÁRIO DE CADASTRO DE PROFESSORES -->
-        <div class="grade-container-branca" style="margin-bottom: 20px;">
-            <h2>➕ Cadastrar Novo Professor (Servidor)</h2>
-            <form id="formCadastroProfessor" style="display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin-top: 15px;">
-                <div>
-                    <label for="cadNome" style="display:block; font-weight:bold; margin-bottom:5px;">Nome do Professor:</label>
-                    <input type="text" id="cadNome" placeholder="Ex: Carlos Silva" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background: white; color: black;">
-                </div>
-                <div>
-                    <label for="cadMatriculaProf" style="display:block; font-weight:bold; margin-bottom:5px;">Matrícula (Deve iniciar com 10):</label>
-                    <input type="text" id="cadMatriculaProf" placeholder="Ex: 101010" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background: white; color: black;">
-                </div>
-                <div>
-                    <label for="cadTurma" style="display:block; font-weight:bold; margin-bottom:5px;">Curso Responsável:</label>
-                    <select id="cadTurma" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background: white; color: black;">
-                        <option value="informatica">Informática</option>
-                        <option value="adm">Administração</option>
-                        <option value="jogos">Jogos Digitais</option>
-                        <option value="eletro">EletroEletrônica</option>
-                    </select>
-                </div>
-                <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px;">Salvar Professor</button>
-            </form>
-            <div id="msgCadastro" style="margin-top: 10px; font-weight: bold;"></div>
-        </div>
-
-        <!-- 2. PAINEL GERENCIAL -->
+        <!-- PAINEL GERENCIAL -->
         <div id="blocoServidor">
             <h3>⚙️ Painel Gerencial do Servidor</h3>
-            <p>Menu de gerenciamento active. Você possui permissões para importar arquivos XML.</p>
+            <p>Menu de gerenciamento ativo. Você possui permissões para importar arquivos XML.</p>
 
             <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
                 <label for="arquivoXML">Arquivo XML:</label>
@@ -98,7 +72,7 @@
         <div class="grade-container-branca">
             <h2>Sincronização com o SUAP</h2>
             <div class="botoes-sync">
-                <button type="button" class="btn-sync">Importar Professores</button>
+                <button type="button" id="btnAbrirCadastro" class="btn-sync">Importar Professores</button>
                 <button type="button" class="btn-sync">Atualizar Salas</button>
                 <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
             </div>
@@ -114,10 +88,37 @@
         </div>
     </div>
 
-    <!-- Primeiro carrega o comum, depois o específico -->
+    <!-- JANELA FLUTUANTE (MODAL) DE CADASTRO -->
+    <div id="modalProf" class="modal-cadastro">
+        <div class="modal-conteudo">
+            <span id="btnFecharCadastro" class="fechar-modal">&times;</span>
+            <h2>➕ Cadastrar Novo Professor</h2>
+            <form id="formCadastroProfessor">
+                <div class="campo-grupo">
+                    <label for="cadNome">Nome do Professor:</label>
+                    <input type="text" id="cadNome" placeholder="Ex: Carlos Silva" required>
+                </div>
+                <div class="campo-grupo">
+                    <label for="cadMatriculaProf">Matrícula (Deve iniciar com 10):</label>
+                    <input type="text" id="cadMatriculaProf" placeholder="Ex: 101010" required>
+                </div>
+                <div class="campo-grupo">
+                    <label for="cadTurma">Curso Responsável:</label>
+                    <select id="cadTurma">
+                        <option value="informatica">Informática</option>
+                        <option value="adm">Administração</option>
+                        <option value="jogos">Jogos Digitais</option>
+                        <option value="eletro">EletroEletrônica</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-salvar-prof">Salvar Professor</button>
+            </form>
+            <div id="msgCadastro"></div>
+        </div>
+    </div>
+
     <script src="comum.js"></script>
     <script src="adm.js"></script>
 
 </body>
 </html>
-
