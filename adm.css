@@ -1,3 +1,5 @@
+/* adm.css */
+
 body {
     align-items: flex-start;
     padding-top: 60px;
@@ -30,13 +32,19 @@ body {
     color: var(--cinza-secundario);
 }
 
+/* Ajustado para seguir o padrão de caixas brancas do seu portal */
 #blocoServidor {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: var(--espaco-md);
+    background-color: var(--branco);
+    box-shadow: var(--sombra-padrao);
+    padding: var(--espaco-lg);
     border-radius: var(--borda-radius-lg);
     margin-bottom: var(--espaco-lg);
-    color: var(--branco);
+    color: #333333; /* Texto escuro para dar leitura perfeita no fundo branco */
+}
+
+#blocoServidor h3 {
+    color: var(--verde-tabela);
+    margin-top: 0;
 }
 
 #blocoServidor form, #blocoServidor .exportar-selecao {
@@ -48,13 +56,14 @@ body {
 }
 
 #blocoServidor button {
-    background-color: var(--verde-escuro);
+    background-color: var(--verde-tabela);
     color: var(--branco);
-    border: 1px solid var(--verde-escuro-hover);
-    padding: 6px 14px;
-    border-radius: 4px;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 13px;
 }
 
 #blocoServidor button:hover {
@@ -64,7 +73,9 @@ body {
 #blocoServidor select {
     padding: 6px 10px;
     border-radius: 4px;
-    border: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: black;
 }
 
 #statusImportacao {
@@ -123,3 +134,4 @@ body {
     .cards-resumo { flex-direction: column; }
     .botoes-sync { flex-direction: column; }
 }
+
