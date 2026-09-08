@@ -73,8 +73,8 @@ function carregarHorariosDoProfessor(nomeProfessor) {
             linhasGrade.forEach((linhaXML, index) => {
                 // Se o esqueleto da tabela ainda não tiver essa linha de hora criada, inicializa ela vazia
                 if (!horariosPadrao[index]) {
-                    horariosPadrao[index] = { hora: AppkitWebview = linhaXML.hora, seg: "-", ter: "-", qua: "-", qui: "-", sex: "-" };
-                }
+    horariosPadrao[index] = { hora: linhaXML.hora, seg: "-", ter: "-", qua: "-", qui: "-", sex: "-" };
+}
 
                 // Função auxiliar que limpa as tags do XML e verifica se este professor ministra a aula
                 function filtrarDia(celulaConteudo, cursoNome) {
