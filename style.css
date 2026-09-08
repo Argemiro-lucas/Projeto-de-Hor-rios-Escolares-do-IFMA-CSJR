@@ -249,8 +249,9 @@ form button:hover {
     border-radius: 12px;
     margin-bottom: 20px;
     color: #ffffff;
-    display: none;
+    display: block; /* Alterado aqui para aparecer sempre */
 }
+
 
 /* Caixa branca arredondada de Filtros (Selecione o Curso...) */
 .filtro-secao { 
