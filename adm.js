@@ -190,28 +190,3 @@ document.getElementById('formExportar').addEventListener('submit', function(e) {
     link.click();
     URL.revokeObjectURL(url);
 });
-/* Animação de rotação (Spinner) para simular carregamento */
-@keyframes girarSUAP {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Classe aplicada temporariamente ao botão durante o clique */
-.sincronizando-suap {
-    pointer-events: none; /* Impede cliques repetidos */
-    opacity: 0.7;
-    position: relative;
-}
-
-.sincronizando-suap::after {
-    content: "";
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-left: 8px;
-    border: 2px solid #ffffff;
-    border-top: 2px solid transparent;
-    border-radius: 50%;
-    animation: girarSUAP 0.8s linear infinite;
-    vertical-align: middle;
-}
