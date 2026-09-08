@@ -1,6 +1,6 @@
 // index.js
 
-// 1. BANCO DE DADOS PADRÃO ATUALIZADO: Separado por Curso, Semestre e Turno para cumprir as regras técnicas
+// 1. BANCO DE DADOS PADRÃO REVISADO E FORMATADO (INFORMATICA, ELETRO, ADM E JOGOS)
 const bancoHorariosPadrao = {
     informatica: {
         atual: {
@@ -86,9 +86,7 @@ const bancoHorariosPadrao = {
     }
 };
 
-// =========================================================================
 // 2. CARREGAMENTO DOS DADOS ATRAVÉS DO LOCALSTORAGE DO SISTEMA
-// =========================================================================
 let bancoHorarios;
 const dadosSalvos = localStorage.getItem('bancoHorarios');
 if (dadosSalvos) {
@@ -97,10 +95,7 @@ if (dadosSalvos) {
     bancoHorarios = bancoHorariosPadrao;
     localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
 }
-
-// =========================================================================
 // 3. FUNÇÃO DE RE-RENDERIZAÇÃO ADAPTATIVA: Garante a leitura de todos os turnos
-// =========================================================================
 function carregarTabelaHorarios(curso, semestre, turno) {
     const corpoTabela = document.getElementById('corpoTabelaHorarios');
     const tituloGrade = document.getElementById('tituloGrade');
@@ -144,10 +139,7 @@ function carregarTabelaHorarios(curso, semestre, turno) {
         corpoTabela.innerHTML = `<tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado para essa combinação.</td></tr>`;
     }
 }
-
-// =========================================================================
 // 4. FUNÇÃO DE DISPARO INTERNO DOS EVENTOS DA TELA DO PORTAL
-// =========================================================================
 function atualizarVisualizacao() {
     const filtroCurso = document.getElementById('filtroCurso');
     const filtroSemestre = document.getElementById('filtroSemestre');
@@ -168,10 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (fSemestre) fSemestre.addEventListener('change', atualizarVisualizacao);
     if (fTurno) fTurno.addEventListener('change', atualizarVisualizacao);
 });
-
-// =========================================================================
 // 5. EVENTO DE SUBMIT E VALIDAÇÃO DE PERFIL COM BASE NAS REGRAS DO SUAP
-// =========================================================================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', function(event) {
@@ -237,7 +226,7 @@ function verificarSessaoAtiva() {
     }
 }
 
-function ativarDashboardTela(matricula, perfil) {
+function activarDashboardTela(matricula, perfil) {
     document.body.classList.add('dashboard-ativo');
     
     if (document.getElementById('loginContainer')) document.getElementById('loginContainer').style.display = 'none';
@@ -245,73 +234,20 @@ function ativarDashboardTela(matricula, perfil) {
     if (document.getElementById('dashMatricula')) document.getElementById('dashMatricula').textContent = matricula;
     if (document.getElementById('dashPerfil')) document.getElementById('dashPerfil').textContent = perfil;
     
-    // Adiciona o aviso visual no topo da tabela se for o Servidor
+    // Adiciona o aviso visual informativo na tela se for o Servidor
     if (perfil === "Servidor") {
         const gradeContainer = document.querySelector('.grade-container-branca');
         if (gradeContainer && !document.getElementById('avisoEdicao')) {
             const aviso = document.createElement('div');
             aviso.id = 'avisoEdicao';
             aviso.style.cssText = "background:#e8f5e9; color:#2e7d32; padding:10px; border-radius:6px; margin-bottom:15px; font-weight:bold; font-size:13px; border:1px solid #a5d6a7;";
-            aviso.innerHTML = "📝 Modo de Edição Ativo: Clique diretamente em qualquer matéria ou professor na tabela abaixo para alterar o horário em tempo real.";
+            aviso.innerHTML = "📝 Modo de Visualização do Servidor Ativo: Você está visualizando a grade horária com permissões de administrador.";
             gradeContainer.insertBefore(aviso, gradeContainer.firstChild);
         }
     }
 
     atualizarVisualizacao();
-    ativarEdicaoAoVivo(); 
 }
-
-// Torna todas as células de matérias editáveis em tempo real para o Servidor
-function ativarEdicaoAoVivo() {
-    const perfil = sessionStorage.getItem('perfil');
-    if (perfil !== "Servidor") return;
-
-    const materiasCells = document.querySelectorAll('#corpoTabelaHorarios td.materia');
-    
-    materiasCells.forEach((celula) => {
-        celula.contentEditable = "true";
-        celula.style.cursor = "pointer";
-        celula.style.backgroundColor = "#fffde7"; 
-
-        celula.addEventListener('blur', function() {
-            const curso = document.getElementById('filtroCurso').value;
-            const semestre = document.getElementById('filtroSemestre').value;
-            const turno = document.getElementById('filtroTurno').value;
-            
-            const trPai = this.parentElement;
-            const todasAsLinhas = Array.from(document.querySelectorAll('#corpoTabelaHorarios tr'));
-            const linhaIndex = todasAsLinhas.indexOf(trPai);
-
-            const colunas = Array.from(trPai.querySelectorAll('td'));
-            const colIndex = colunas.indexOf(this);
-            const diasSemana = ['hora', 'seg', 'ter', 'qua', 'qui', 'sex'];
-            const diaEditado = diasSemana[colIndex];
-
-            if (bancoHorarios[curso] && bancoHorarios[curso][semestre]) {
-                const dadosSemestre = bancoHorarios[curso][semestre];
-                
-                if (Array.isArray(dadosSemestre)) {
-                    dadosSemestre[linhaIndex][diaEditado] = this.innerHTML;
-                } else if (dadosSemestre[turno]) {
-                    dadosSemestre[turno][linhaIndex][diaEditado] = this.innerHTML;
-                }
-
-                localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
-            }
-        });
-    });
-}
-
-// Adiciona um gatilho para re-aplicar os eventos de edição toda vez que o Servidor mudar de filtro
-const filtrosIds = ['filtroCurso', 'filtroSemestre', 'filtroTurno'];
-filtrosIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-        el.addEventListener('change', () => {
-            setTimeout(ativarEdicaoAoVivo, 50); 
-        });
-    }
-});
 
 // EXECUÇÃO INICIAL GLOBAL: Força o disparo do sistema ao abrir a página
 verificarSessaoAtiva();
