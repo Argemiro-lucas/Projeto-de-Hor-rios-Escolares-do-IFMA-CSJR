@@ -50,11 +50,23 @@
             </div>
         </div>
 
-        <!-- T4.2: Mapa de Alocação de Salas -->
+        <!-- T4.2: Mapa de Alocação de Salas (ATUALIZADO) -->
         <div class="grade-container-branca">
-            <h2>Mapa de Alocação de Salas</h2>
-            <div id="mapaSalas" class="mapa-salas-placeholder">
-                <p>Wireframe: aqui entrará a grade visual de salas x horários (Fase 4).</p>
+            <h2>Mapa de Alocação de Salas (Ocupação Física)</h2>
+            <div class="tabela-container">
+                <table class="tabela-horarios">
+                    <thead>
+                        <tr>
+                            <th>Sala / Bloco</th>
+                            <th>Curso / Turma Alocada</th>
+                            <th>Professor Responsável</th>
+                            <th>Status de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoMapaSalas">
+                        <!-- Linhas injetadas dinamicamente pelo arquivo professor.js -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
