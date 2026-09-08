@@ -56,132 +56,164 @@ const bancoHorariosPadrao = {
             tarde: [{ hora: "13:30 - 14:20", seg: "Comunicação Org.<span class='professor'>Prof. Aline</span>", ter: "Comportamento Humano<span class='professor'>Prof. Ricardo</span>", qua: "Estatística de Mercado<span class='professor'>Prof. Sergio</span>", qui: "Comunicação Org.<span class='professor'>Prof. Aline</span>", sex: "Pesquisa Organizacional<span class='professor'>Prof. Sandra</span>" }],
             noite: [{ hora: "19:00 - 19:50", seg: "Administração Estratégica<span class='professor'>Prof. Ricardo</span>", ter: "Direito Empresarial<span class='professor'>Prof. Sandra</span>", qua: "Finanças Corporativas<span class='professor'>Prof. Sergio</span>", qui: "Administração Estratégica<span class='professor'>Prof. Ricardo</span>", sex: "Modelos de Negócios<span class='professor'>Prof. Aline</span>" }]
         },
-        proximo: { manha: [{ hora: "07:30 - 08:20", seg: "ContabilidadeProf. Julia", ter: "Gestão de PessoasProf. Ricardo", qua: "EconomiaProf. Sergio", qui: "ContabilidadeProf. Julia", sex: "DireitoProf. Sandra" }],
-tarde: [{ hora: "13:30 - 14:20", seg: "Logística EmpresarialProf. Sergio", ter: "Marketing e ConsumoProf. Aline", qua: "Gestão da Cadeia SuprimentosProf. Julia", qui: "Logística EmpresarialProf. Sergio", sex: "Contabilidade de CustosProf. Ricardo" }],
-noite: [{ hora: "19:00 - 19:50", seg: "Gestão de Operações GlobaisProf. Julia", ter: "EmpreendedorismoProf. Ricardo", qua: "Análise MacroeconômicaProf. Sergio", qui: "EmpreendedorismoProf. Ricardo", sex: "Auditoria e ControladoriaProf. Sandra" }]
-},
-"2026.1": {
-manha: [{ hora: "07:30 - 08:20", seg: "Introdução à Adm.Prof. Ricardo", ter: "Sociologia das Org.Prof. Sandra", qua: "Estatística BásicaProf. Sergio", qui: "Introdução à Adm.Prof. Ricardo", sex: "FilosofiaProf. Rita" }],
-tarde: [{ hora: "13:30 - 14:20", seg: "Fundamentos de EconomiaProf. Sergio", ter: "História da AdministraçãoProf. Ricardo", qua: "Sociologia do TrabalhoProf. Sandra", qui: "História da AdministraçãoProf. Ricardo", sex: "Metodologia CientíficaProf. Rita" }],
-noite: [{ hora: "19:00 - 19:50", seg: "Teorias EconômicasProf. Sergio", ter: "Matemática Pura AplicadaProf. Ricardo", qua: "Comunicação e EscritaProf. Aline", qui: "Teorias EconômicasProf. Sergio", sex: "Ética e SociedadeProf. Rita" }]
-}
-},
-jogos: {
-atual: {
-manha: [{ hora: "07:30 - 08:20", seg: "História dos JogosProf. Carla", ter: "Lógica de JogosProf. Lucas", qua: "Desenho VetorialProf. Bruno", qui: "Lógica de JogosProf. Lucas", sex: "RoteirizaçãoProf. Amanda" }],
-tarde: [{ hora: "13:30 - 14:20", seg: "Desenho AnatômicoProf. Bruno", ter: "Arquitetura de Game EnginesProf. Lucas", qua: "Roteiros para Mídias DigitaisProf. Amanda", qui: "Arquitetura de Game EnginesProf. Lucas", sex: "Fundamentos de Arte 2DProf. Carla" }],
-noite: [{ hora: "19:00 - 19:50", seg: "Programação de Motores AvançadosProf. Lucas", ter: "Animação de Personagens 3DProf. Bruno", qua: "Design de Níveis ComplexosProf. Carla", qui: "Programação de Motores AvançadosProf. Lucas", sex: "Sonorização AplicadaProf. Amanda" }]
-},
-proximo: {
-manha: [{ hora: "07:30 - 08:20", seg: "Modelagem 3DProf. Bruno", ter: "Roteiro e NarrativeProf. Carla", qua: "Motores de JogosProf. Diego", qui: "Modelagem 3DProf. Bruno", sex: "Programação de JogosProf. Lucas" }],
-tarde: [{ hora: "13:30 - 14:20", seg: "Texturização de SuperfíciesProf. Bruno", ter: "Matemática para Vetores 3DProf. Diego", qua: "Inteligência Artificial JogosProf. Lucas", qui: "Texturização de SuperfíciesProf. Bruno", sex: "Interface UI/UX JogosProf. Carla" }],
-noite: [{ hora: "19:00 - 19:50", seg: "Jogos Multiplayer RedeProf. Lucas", ter: "Física Realista ComputacionalProf. Diego", qua: "Produção Executiva GamesProf. Carla", qui: "Jogos Multiplayer RedeProf. Lucas", sex: "Projeto de Conclusão EstúdioProf. Bruno" }]
-},
-"2026.1": {
-manha: [{ hora: "07:30 - 08:20", seg: "Pixel ArtProf. Bruno", ter: "Matemática para JogosProf. Diego", qua: "Game Design IProf. Carla", qui: "Pixel ArtProf. Bruno", sex: "Ética e JogosProf. Amanda" }],
-tarde: [{ hora: "13:30 - 14:20", seg: "Game Design BásicoProf. Carla", ter: "Áudio Digital TeoriaProf. Amanda", qua: "Vetores FundamentosProf. Diego", qui: "Game Design BásicoProf. Carla", sex: "Expressão Artística 2DProf. Bruno" }],
-noite: [{ hora: "19:00 - 19:50", seg: "Algoritmos para GamesProf. Lucas", ter: "História da Arte ClássicaProf. Carla", qua: "Introdução ao RoteiroProf. Amanda", qui: "Algoritmos para GamesProf. Lucas", sex: "Filosofia dos Meios DigitaisProf. Bruno" }]
-}
-}
+        proximo: { 
+            manha: [{ hora: "07:30 - 08:20", seg: "Contabilidade<span class='professor'>Prof. Julia</span>", ter: "Gestão de Pessoas<span class='professor'>Prof. Ricardo</span>", qua: "Economia<span class='professor'>Prof. Sergio</span>", qui: "Contabilidade<span class='professor'>Prof. Julia</span>", sex: "Direito<span class='professor'>Prof. Sandra</span>" }],
+            tarde: [{ hora: "13:30 - 14:20", seg: "Logística Empresarial<span class='professor'>Prof. Sergio</span>", ter: "Marketing e Consumo<span class='professor'>Prof. Aline</span>", qua: "Gestão da Cadeia Suprimentos<span class='professor'>Prof. Julia</span>", qui: "Logística Empresarial<span class='professor'>Prof. Sergio</span>", sex: "Contabilidade de Custos<span class='professor'>Prof. Ricardo</span>" }],
+            noite: [{ hora: "19:00 - 19:50", seg: "Gestão de Operações Globais<span class='professor'>Prof. Julia</span>", ter: "Empreendedorismo<span class='professor'>Prof. Ricardo</span>", qua: "Análise Macroeconômica<span class='professor'>Prof. Sergio</span>", qui: "Empreendedorismo<span class='professor'>Prof. Ricardo</span>", sex: "Auditoria e Controladoria<span class='professor'>Prof. Sandra</span>" }]
+        },
+        "2026.1": {
+            manha: [{ hora: "07:30 - 08:20", seg: "Introdução à Adm.<span class='professor'>Prof. Ricardo</span>", ter: "Sociologia das Org.<span class='professor'>Prof. Sandra</span>", qua: "Estatística Básica<span class='professor'>Prof. Sergio</span>", qui: "Introdução à Adm.<span class='professor'>Prof. Ricardo</span>", sex: "Filosofia<span class='professor'>Prof. Rita</span>" }],
+            tarde: [{ hora: "13:30 - 14:20", seg: "Fundamentos de Economia<span class='professor'>Prof. Sergio</span>", ter: "História da Administração<span class='professor'>Prof. Ricardo</span>", qua: "Sociologia do Trabalho<span class='professor'>Prof. Sandra</span>", qui: "História da Administração<span class='professor'>Prof. Ricardo</span>", sex: "Metodologia Científica<span class='professor'>Prof. Rita</span>" }],
+            noite: [{ hora: "19:00 - 19:50", seg: "Teorias Econômicas<span class='professor'>Prof. Sergio</span>", ter: "Matemática Pura Aplicada<span class='professor'>Prof. Ricardo</span>", qua: "Comunicação e Escrita<span class='professor'>Prof. Aline</span>", qui: "Teorias Econômicas<span class='professor'>Prof. Sergio</span>", sex: "Ética e Sociedade<span class='professor'>Prof. Rita</span>" }]
+        }
+    },
+    jogos: {
+        atual: {
+            manha: [{ hora: "07:30 - 08:20", seg: "História dos Jogos<span class='professor'>Prof. Carla</span>", ter: "Lógica de Jogos<span class='professor'>Prof. Lucas</span>", qua: "Desenho Vetorial<span class='professor'>Prof. Bruno</span>", qui: "Lógica de Jogos<span class='professor'>Prof. Lucas</span>", sex: "Roteirização<span class='professor'>Prof. Amanda</span>" }],
+            tarde: [{ hora: "13:30 - 14:20", seg: "Desenho Anatômico<span class='professor'>Prof. Bruno</span>", ter: "Arquitetura de Game Engines<span class='professor'>Prof. Lucas</span>", qua: "Roteiros para Mídias Digitais<span class='professor'>Prof. Amanda</span>", qui: "Arquitetura de Game Engines<span class='professor'>Prof. Lucas</span>", sex: "Fundamentos de Arte 2D<span class='professor'>Prof. Carla</span>" }],
+            noite: [{ hora: "19:00 - 19:50", seg: "Programação de Motores Avançados<span class='professor'>Prof. Lucas</span>", ter: "Animação de Personagens 3D<span class='professor'>Prof. Bruno</span>", qua: "Design de Níveis Complexos<span class='professor'>Prof. Carla</span>", qui: "Programação de Motores Avançados<span class='professor'>Prof. Lucas</span>", sex: "Sonorização Aplicada<span class='professor'>Prof. Amanda</span>" }]
+        },
+        proximo: {
+            manha: [{ hora: "07:30 - 08:20", seg: "Modelagem 3D<span class='professor'>Prof. Bruno</span>", ter: "Roteiro e Narrative<span class='professor'>Prof. Carla</span>", qua: "Motores de Jogos<span class='professor'>Prof. Diego</span>", qui: "Modelagem 3D<span class='professor'>Prof. Bruno</span>", sex: "Programação de Jogos<span class='professor'>Prof. Lucas</span>" }],
+            tarde: [{ hora: "13:30 - 14:20", seg: "Texturização de Superfícies<span class='professor'>Prof. Bruno</span>", ter: "Matemática para Vetores 3D<span class='professor'>Prof. Diego</span>", qua: "Inteligência Artificial Jogos<span class='professor'>Prof. Lucas</span>", qui: "Texturização de Superfícies<span class='professor'>Prof. Bruno</span>", sex: "Interface UI/UX Jogos<span class='professor'>Prof. Carla</span>" }],
+            noite: [{ hora: "19:00 - 19:50", seg: "Jogos Multiplayer Rede<span class='professor'>Prof. Lucas</span>", ter: "Física Realista Computacional<span class='professor'>Prof. Diego</span>", qua: "Produção Executiva Games<span class='professor'>Prof. Carla</span>", qui: "Jogos Multiplayer Rede<span class='professor'>Prof. Lucas</span>", sex: "Projeto de Conclusão Estúdio<span class='professor'>Prof. Bruno</span>" }]
+        },
+        "2026.1": {
+            manha: [{ hora: "07:30 - 08:20", seg: "Pixel Art<span class='professor'>Prof. Bruno</span>", ter: "Matemática para Jogos<span class='professor'>Prof. Diego</span>", qua: "Game Design I<span class='professor'>Prof. Carla</span>", qui: "Pixel Art<span class='professor'>Prof. Bruno</span>", sex: "Ética e Jogos<span class='professor'>Prof. Amanda</span>" }],
+            tarde: [{ hora: "13:30 - 14:20", seg: "Game Design Básico<span class='professor'>Prof. Carla</span>", ter: "Áudio Digital Teoria<span class='professor'>Prof. Amanda</span>", qua: "Vetores Fundamentos<span class='professor'>Prof. Diego</span>", qui: "Game Design Básico<span class='professor'>Prof. Carla</span>", sex: "Expressão Artística 2D<span class='professor'>Prof. Bruno</span>" }],
+            noite: [{ hora: "19:00 - 19:50", seg: "Algoritmos para Games<span class='professor'>Prof. Lucas</span>", ter: "História da Arte Clássica<span class='professor'>Prof. Carla</span>", qua: "Introdução ao Roteiro<span class='professor'>Prof. Amanda</span>", qui: "Algoritmos para Games<span class='professor'>Prof. Lucas</span>", sex: "Filosofia dos Meios Digitais<span class='professor'>Prof. Bruno</span>" }]
+        }
+    }
 };
+
 // 2. CARREGAMENTO DOS DADOS ATRAVÉS DO LOCALSTORAGE DO SISTEMA
 let bancoHorarios;
 const dadosSalvos = localStorage.getItem('bancoHorarios');
 if (dadosSalvos) {
-bancoHorarios = JSON.parse(dadosSalvos);
+    bancoHorarios = JSON.parse(dadosSalvos);
 } else {
-bancoHorarios = bancoHorariosPadrao;
-localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
+    bancoHorarios = bancoHorariosPadrao;
+    localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
 }
 // 3. FUNÇÃO DE RE-RENDERIZAÇÃO ADAPTATIVA: Combina Curso, Semestre e o Turno para exibir dados únicos
 function carregarTabelaHorarios(curso, semestre, turno) {
-const corpoTabela = document.getElementById('corpoTabelaHorarios');
-const tituloGrade = document.getElementById('tituloGrade');
-const nomesCursos = { informatica: "Informática", adm: "Administração (ADM)", jogos: "Jogos Digitais", eletro: "EletroEletrônica" };
-const nomesSemestres = { atual: "Semestre Atual", proximo: "Próximo Semestre", "2026.1": "Semestre Passado (2026.1)" };
-const nomesTurnos = { manha: "Manhã", tarde: "Tarde", noite: "Noite" };
-if (tituloGrade) {
-tituloGrade.textContent = Horários e Disciplinas: ${nomesCursos[curso]} (${nomesSemestres[semestre]}) - Turno ${nomesTurnos[turno]};
-}
-if (!corpoTabela) return;
-corpoTabela.innerHTML = "";
-// A. Fluxo Primário: Tenta ler o arquivo XML completo que foi importado pelo Administrador
-if (bancoHorarios[curso] && bancoHorarios[curso][semestre] && !bancoHorarios[curso][semestre].manha) {
-bancoHorarios[curso][semestre].forEach(linha => {
-const tr = document.createElement('tr');
-tr.innerHTML = <td><strong>${linha.hora}</strong></td><td class="materia">${linha.seg}</td><td class="materia">${linha.ter}</td><td class="materia">${linha.qua}</td><td class="materia">${linha.qui}</td><td class="materia">${linha.sex}</td>;
-corpoTabela.appendChild(tr);
-});
-return;
-}
-// B. Fluxo Secundário: Lê a estrutura do banco estático que criamos diferenciada por turno
-if (bancoHorarios[curso] && bancoHorarios[curso][semestre] && bancoHorarios[curso][semestre][turno]) {
-bancoHorarios[curso][semestre][turno].forEach(linha => {
-const tr = document.createElement('tr');
-tr.innerHTML = <td><strong>${linha.hora}</strong></td><td class="materia">${linha.seg}</td><td class="materia">${linha.ter}</td><td class="materia">${linha.qua}</td><td class="materia">${linha.qui}</td><td class="materia">${linha.sex}</td>;
-corpoTabela.appendChild(tr);
-});
-} else {
-corpoTabela.innerHTML = <tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado para essa combinação.</td></tr>;
-}
+    const corpoTabela = document.getElementById('corpoTabelaHorarios');
+    const tituloGrade = document.getElementById('tituloGrade');
+    
+    const nomesCursos = { informatica: "Informática", adm: "Administração (ADM)", jogos: "Jogos Digitais", eletro: "EletroEletrônica" };
+    const nomesSemestres = { atual: "Semestre Atual", proximo: "Próximo Semestre", "2026.1": "Semestre Passado (2026.1)" };
+    const nomesTurnos = { manha: "Manhã", tarde: "Tarde", noite: "Noite" };
+    
+    if (tituloGrade) {
+        tituloGrade.textContent = `Horários e Disciplinas: ${nomesCursos[curso] || curso} (${nomesSemestres[semestre] || semestre}) - Turno ${nomesTurnos[turno] || turno}`;
+    }
+    
+    if (!corpoTabela) return;
+    corpoTabela.innerHTML = "";
+
+    if (!bancoHorarios[curso] || !bancoHorarios[curso][semestre]) {
+        corpoTabela.innerHTML = `<tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado para essa combinação.</td></tr>`;
+        return;
+    }
+
+    const dadosSemestre = bancoHorarios[curso][semestre];
+
+    // A. Fluxo Primário: Se for uma Array direta (vinda de importação de arquivos)
+    if (Array.isArray(dadosSemestre)) {
+        dadosSemestre.forEach(linha => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><strong>${linha.hora}</strong></td><td class="materia">${linha.seg}</td><td class="materia">${linha.ter}</td><td class="materia">${linha.qua}</td><td class="materia">${linha.qui}</td><td class="materia">${linha.sex}</td>`;
+            corpoTabela.appendChild(tr);
+        });
+        return;
+    }
+
+    // B. Fluxo Secundário: Lê a estrutura do banco padrão diferenciada por turno
+    if (dadosSemestre[turno] && Array.isArray(dadosSemestre[turno])) {
+        dadosSemestre[turno].forEach(linha => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><strong>${linha.hora}</strong></td><td class="materia">${linha.seg}</td><td class="materia">${linha.ter}</td><td class="materia">${linha.qua}</td><td class="materia">${linha.qui}</td><td class="materia">${linha.sex}</td>`;
+            corpoTabela.appendChild(tr);
+        });
+    } else {
+        corpoTabela.innerHTML = `<tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado para essa combinação.</td></tr>`;
+    }
 }
 // 4. FUNÇÃO DE DISPARO INTERNO DOS EVENTOS DA TELA DO PORTAL
 function atualizarVisualizacao() {
-const cursoSelecionado = document.getElementById('filtroCurso').value;
-const semestreSelecionado = document.getElementById('filtroSemestre').value;
-const turnoSelecionado = document.getElementById('filtroTurno').value; // Captura dinamicamente o Turno
-carregarTabelaHorarios(cursoSelecionado, semestreSelecionado, turnoSelecionado);
+    const filtroCurso = document.getElementById('filtroCurso');
+    const filtroSemestre = document.getElementById('filtroSemestre');
+    const filtroTurno = document.getElementById('filtroTurno');
+
+    if (filtroCurso && filtroSemestre && filtroTurno) {
+        carregarTabelaHorarios(filtroCurso.value, filtroSemestre.value, filtroTurno.value);
+    }
 }
-// Vincula os escutadores nos 3 filtros do dashboard do aluno
+
+// Vincula os escutadores nos 3 filtros do dashboard do aluno de forma segura
 if (document.getElementById('filtroCurso')) document.getElementById('filtroCurso').addEventListener('change', atualizarVisualizacao);
 if (document.getElementById('filtroSemestre')) document.getElementById('filtroSemestre').addEventListener('change', atualizarVisualizacao);
 if (document.getElementById('filtroTurno')) document.getElementById('filtroTurno').addEventListener('change', atualizarVisualizacao);
+
 // 5. EVENTO DE SUBMIT E VALIDAÇÃO DE PERFIL COM BASE NAS REGRAS DO SUAP
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-event.preventDefault();
-const matricula = document.getElementById('matricula').value.trim();
-const senha = document.getElementById('senha').value;
-const msgErro = document.getElementById('msgErro');
-if (!senha || senha.trim().length < 4) {
-msgErro.textContent = "Matrícula ou senha incorreta no SUAP.";
-msgErro.style.display = "block";
-return;
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const matricula = document.getElementById('matricula').value.trim();
+        const senha = document.getElementById('senha').value;
+        const msgErro = document.getElementById('msgErro');
+        
+        if (!senha || senha.trim().length < 4) {
+            msgErro.textContent = "Matrícula ou senha incorreta no SUAP.";
+            msgErro.style.display = "block";
+            return;
+        }
+        
+        msgErro.style.display = "none";
+        let perfil = "Aluno";
+        
+        if (matricula.startsWith("20")) perfil = "Aluno";
+        else if (matricula.startsWith("10")) perfil = "Professor";
+        else if (matricula.startsWith("00")) perfil = "Servidor";
+        // Validação de segurança baseada na memória permanente de professores
+        if (perfil === 'Professor') {
+            const professoresCadastrados = JSON.parse(localStorage.getItem('professores') || '[]');
+            const profExistente = professoresCadastrados.find(p => p.matricula === matricula);
+            
+            if (!profExistente) {
+                msgErro.textContent = "Acesso negado: Este professor não foi cadastrado pelo Administrador.";
+                msgErro.style.display = "block";
+                return;
+            }
+            sessionStorage.setItem('nomeProfessorLogado', profExistente.nome);
+        }
+        
+        // Grava as informações no sessionStorage
+        sessionStorage.setItem('matricula', matricula);
+        sessionStorage.setItem('perfil', perfil);
+        
+        if (perfil === 'Professor') {
+            window.location.href = 'professor.html';
+            return;
+        }
+        if (perfil === 'Servidor') {
+            window.location.href = 'adm.html';
+            return;
+        }
+        
+        // Fluxo do Aluno: Exibe o dashboard e monta a primeira tabela
+        document.body.classList.add('dashboard-ativo');
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('dashboardContainer').style.display = 'block';
+        document.getElementById('dashMatricula').textContent = matricula;
+        document.getElementById('dashPerfil').textContent = perfil;
+        
+        atualizarVisualizacao();
+    });
 }
-msgErro.style.display = "none";
-let perfil = "Aluno";
-if (matricula.startsWith("20")) perfil = "Aluno";
-else if (matricula.startsWith("10")) perfil = "Professor";
-else if (matricula.startsWith("00")) perfil = "Servidor";
-// Validação de segurança em paralelo baseada na memória permanente de professores
-if (perfil === 'Professor') {
-const professoresCadastrados = JSON.parse(localStorage.getItem('professores') || '[]');
-const profExistente = professoresCadastrados.find(p => p.matricula === matricula);
-if (!profExistente) {
-msgErro.textContent = "Acesso negado: Este professor não foi cadastrado pelo Administrador.";
-msgErro.style.display = "block";
-return;
-}
-sessionStorage.setItem('nomeProfessorLogado', profExistente.nome);
-}
-// Grava as informações exigidas pelo seu comum.js
-sessionStorage.setItem('matricula', matricula);
-sessionStorage.setItem('perfil', perfil);
-if (perfil === 'Professor') {
-window.location.href = 'professor.html';
-return;
-}
-if (perfil === 'Servidor') {
-window.location.href = 'adm.html';
-return;
-}
-// Fluxo do Aluno: Exibe o dashboard e monta a primeira tabela
-document.body.classList.add('dashboard-ativo');
-document.getElementById('loginContainer').style.display = 'none';
-document.getElementById('dashboardContainer').style.display = 'block';
-document.getElementById('dashMatricula').textContent = matricula;
-document.getElementById('dashPerfil').textContent = perfil;
-atualizarVisualizacao();
-});
-configurarBotaoSair();
 
-
+// Chamada protegida da função externa de logout
+if (typeof configurarBotaoSair === "function") {
+    configurarBotaoSair();
+}
