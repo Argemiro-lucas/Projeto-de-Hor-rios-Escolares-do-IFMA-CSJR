@@ -6,7 +6,20 @@ configurarBotaoSair();
 document.addEventListener("DOMContentLoaded", () => {
     atualizarContadorProfessores();
     
-    // Controle de abrir e fechar a janela flutuante (Modal)
+    // --- LÓGICA DO MENU RETRÁTIL DO PAINEL GERENCIAL ---
+    const btnAlternar = document.getElementById("btnAlternarPainel");
+    const blocoServidor = document.getElementById("blocoServidor");
+    const setaPainel = document.getElementById("setaPainel");
+
+    if (btnAlternar && blocoServidor && setaPainel) {
+        btnAlternar.addEventListener("click", () => {
+            // Adiciona ou remove a classe que controla o deslizamento e a rotação da seta
+            blocoServidor.classList.toggle("aberto");
+            setaPainel.classList.toggle("rodada");
+        });
+    }
+
+    // --- CONTROLE DA JANELA FLUTUANTE (MODAL) ---
     const modal = document.getElementById("modalProf");
     const btnAbrir = document.getElementById("btnAbrirCadastro");
     const btnFechar = document.getElementById("btnFecharCadastro");
@@ -24,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
+    // --- ENVIO DO FORMULÁRIO DE CADASTRO ---
     const formCadastro = document.getElementById("formCadastroProfessor");
     if (formCadastro) {
         formCadastro.addEventListener("submit", function(e) {
@@ -117,7 +131,7 @@ document.getElementById('formImportar').addEventListener('submit', function(e) {
             localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
 
             status.textContent = `Grade de "${curso}" (${semestre}) importada com sucesso! Já disponível para os alunos.`;
-            status.style.color = "#b6e6c2";
+            status.style.color = "#28a745";
 
         } catch (erro) {
             status.textContent = "Erro ao importar: verifique o formato do arquivo XML.";
