@@ -1,7 +1,67 @@
+// adm.js
+
+// Verifica o acesso e configura o cabeçalho/logout através do comum.js
 verificarAcesso('Servidor');
 configurarBotaoSair();
 
-// Importação de XML (lê o arquivo e grava no localStorage)
+// Executa as configurações do formulário e contadores assim que o HTML carregar
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarContadorProfessores();
+    
+    const formCadastro = document.getElementById("formCadastroProfessor");
+    if (formCadastro) {
+        formCadastro.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById("cadNome").value.trim();
+            const matricula = document.getElementById("cadMatriculaProf").value.trim();
+            const turma = document.getElementById("cadTurma").value;
+            const msgCadastro = document.getElementById("msgCadastro");
+
+            // Busca os professores já salvos ou cria uma lista nova vazia
+            let professores = JSON.parse(localStorage.getItem("professores") || "[]");
+
+            // Evita cadastrar duas pessoas com a mesma matrícula
+            if (professores.some(p => p.matricula === matricula)) {
+                msgCadastro.textContent = "Erro: Esta matrícula já está cadastrada!";
+                msgCadastro.style.color = "#ff4d4d";
+                return;
+            }
+
+            // Adiciona o novo professor à lista
+            professores.push({ 
+                nome: nome, 
+                matricula: matricula, 
+                turma: turma
+            });
+            
+            // Grava de volta no localStorage
+            localStorage.setItem("professores", JSON.stringify(professores));
+
+            // Mostra mensagem de sucesso e limpa os campos digitados
+            msgCadastro.textContent = `Professor ${nome} cadastrado com sucesso!`;
+            msgCadastro.style.color = "#28a745";
+            formCadastro.reset();
+            
+            // Atualiza o contador de professores cadastrados no card do topo
+            atualizarContadorProfessores();
+        });
+    }
+});
+
+// Função para atualizar o número de professores cadastrados no card do painel
+function atualizarContadorProfessores() {
+    const professores = JSON.parse(localStorage.getItem("professores") || "[]");
+    const cards = document.querySelectorAll(".card-numero");
+    // Altera o segundo card do seu layout ("Professores cadastrados")
+    if (cards && cards[1]) {
+        cards[1].textContent = professores.length;
+    }
+}
+
+// =========================================================================
+// SEU CÓDIGO ORIGINAL DE IMPORTAÇÃO (XML para localStorage)
+// =========================================================================
 document.getElementById('formImportar').addEventListener('submit', function(e) {
     e.preventDefault();
     const input = document.getElementById('arquivoXML');
@@ -39,7 +99,7 @@ document.getElementById('formImportar').addEventListener('submit', function(e) {
                 }
 
                 novasLinhas.push({
-                    hora: linha.querySelector("hora").textContent.trim(),
+                    hora: WebKitCSSMatrix = linha.querySelector("hora").textContent.trim(),
                     seg: formatarCampo("segunda"),
                     ter: formatarCampo("terca"),
                     qua: formatarCampo("quarta"),
@@ -67,7 +127,9 @@ document.getElementById('formImportar').addEventListener('submit', function(e) {
     leitor.readAsText(arquivo);
 });
 
-// Exportação de XML (lê o localStorage e gera o arquivo)
+// =========================================================================
+// SEU CÓDIGO ORIGINAL DE EXPORTAÇÃO (localStorage para XML)
+// =========================================================================
 document.getElementById('formExportar').addEventListener('submit', function(e) {
     e.preventDefault();
     const curso = document.getElementById('exportCurso').value;
