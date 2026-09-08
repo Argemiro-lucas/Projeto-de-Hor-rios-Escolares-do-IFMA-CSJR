@@ -32,7 +32,6 @@ body {
     color: var(--cinza-secundario);
 }
 
-/* CORREÇÃO AQUI: Mudado para caixa branca com texto escuro para dar leitura */
 #blocoServidor {
     background-color: var(--branco);
     box-shadow: var(--sombra-padrao);
@@ -130,8 +129,94 @@ body {
     border: 1px solid #f5c6cb;
 }
 
+/* --- ESTILOS DA JANELA MODAL DE CADASTRO --- */
+.modal-cadastro {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center; 
+    justify-content: center;
+}
+
+.modal-conteudo {
+    background-color: var(--branco);
+    padding: var(--espaco-lg);
+    border-radius: var(--borda-radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    color: var(--cinza-texto);
+    text-align: left;
+}
+
+.modal-conteudo h2 {
+    color: var(--verde-tabela);
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.modal-conteudo .campo-grupo {
+    margin-bottom: var(--espaco-sm);
+}
+
+.modal-conteudo label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: var(--espaco-xs);
+}
+
+.modal-conteudo input[type="text"], 
+.modal-conteudo select {
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid var(--cinza-borda); 
+    border-radius: 4px; 
+    background: var(--branco); 
+    color: var(--cinza-texto);
+    box-sizing: border-box;
+}
+
+.fechar-modal {
+    position: absolute;
+    right: 15px; 
+    top: 10px;
+    font-size: 24px; 
+    cursor: pointer;
+    color: var(--cinza-secundario);
+}
+
+.fechar-modal:hover { 
+    color: var(--cinza-texto); 
+}
+
+.btn-salvar-prof {
+    background-color: var(--verde-tabela); 
+    color: var(--branco); 
+    border: none; 
+    padding: 10px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin-top: var(--espaco-sm);
+    width: 100%;
+}
+
+.btn-salvar-prof:hover {
+    background-color: var(--verde-escuro-hover);
+}
+
+#msgCadastro {
+    margin-top: var(--espaco-sm); 
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
     .cards-resumo { flex-direction: column; }
     .botoes-sync { flex-direction: column; }
 }
-
