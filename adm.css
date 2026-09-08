@@ -34,9 +34,13 @@ body {
 
 /* --- ESTILOS DO MENU RETRÁTIL (ACCORDION) --- */
 .painel-retratil-container {
-    padding: 0 !important; /* Permite que o cabeçalho preencha as bordas */
+    padding: 0 !important;
     overflow: hidden;
     margin-bottom: var(--espaco-lg);
+    background-color: var(--branco);
+    border-radius: var(--borda-radius-lg);
+    box-shadow: var(--sombra-padrao);
+    border: 1px solid var(--cinza-borda);
 }
 
 .titulo-retratil {
@@ -58,31 +62,35 @@ body {
     color: var(--verde-tabela);
     margin: 0;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .seta-retratil {
     font-size: 14px;
     color: var(--cinza-secundario);
     transition: transform 0.3s ease;
+    display: inline-block;
 }
 
-/* O conteúdo começa fechado por padrão */
-.conteudo-retratil {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 24px;
-    opacity: 0;
+/* Estado inicial do bloco: escondido e zerado */
+#blocoServidor.conteudo-retratil {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 24px !important;
+    opacity: 0 !important;
+    display: block !important; /* Sobrescreve o display:none do style.css */
     transition: max-height 0.3s ease-out, padding 0.3s ease, opacity 0.2s ease;
     color: var(--cinza-texto);
 }
 
-/* Classe utilitária ativada via JS para "abrir" o painel deslizando */
-.conteudo-retratil.aberto {
-    max-height: 500px; /* Limite seguro para o conteúdo expandir */
-    padding: 10px 24px 24px 24px;
-    opacity: 1;
+/* GATILHO QUE O JAVASCRIPT ATIVA PARA ABRIR O PAINEL */
+#blocoServidor.conteudo-retratil.aberto {
+    max-height: 500px !important; /* Permite expandir o conteúdo */
+    padding: 10px 24px 24px 24px !important;
+    opacity: 1 !important;
 }
 
+/* GATILHO PARA ROTACIONAR A SETA EM 180 GRAUS */
 .seta-retratil.rodada {
     transform: rotate(180deg);
 }
