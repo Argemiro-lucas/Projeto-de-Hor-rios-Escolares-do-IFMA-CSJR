@@ -175,20 +175,31 @@
             }
 
             msgErro.style.display = "none";
-            let perfil = "Aluno";
-            if (matricula.startsWith("20")) perfil = "Aluno";
-            else if (matricula.startsWith("10")) perfil = "Professor";
-            else if (matricula.startsWith("00")) perfil = "Servidor";
+let perfil = "Aluno";
+if (matricula.startsWith("20")) perfil = "Aluno";
+else if (matricula.startsWith("10")) perfil = "Professor";
+else if (matricula.startsWith("00")) perfil = "Servidor";
 
-            document.body.classList.add('dashboard-ativo');
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('dashboardContainer').style.display = 'block';
+sessionStorage.setItem('matricula', matricula);
+sessionStorage.setItem('perfil', perfil);
 
-            document.getElementById('dashMatricula').textContent = matricula;
-            document.getElementById('dashPerfil').textContent = perfil;
+if (perfil === 'Professor') {
+    window.location.href = 'professor.html';
+    return;
+}
+if (perfil === 'Servidor') {
+    window.location.href = 'adm.html';
+    return;
+}
 
-           document.getElementById('blocoServidor').style.display = 'block';
-            atualizarVisualizacao();
+document.body.classList.add('dashboard-ativo');
+document.getElementById('loginContainer').style.display = 'none';
+document.getElementById('dashboardContainer').style.display = 'block';
+
+document.getElementById('dashMatricula').textContent = matricula;
+document.getElementById('dashPerfil').textContent = perfil;
+
+atualizarVisualizacao();
         });
 
         document.getElementById('btnSair').addEventListener('click', function() {
@@ -197,6 +208,14 @@
             document.getElementById('loginContainer').style.display = 'flex';
             document.getElementById('matricula').value = "";
             document.getElementById('senha').value = "";
+            document.getElementById('btnSair').addEventListener('click', function() {
+    sessionStorage.removeItem('matricula');
+    sessionStorage.removeItem('perfil');
+    document.body.classList.remove('dashboard-ativo');
+    document.getElementById('dashboardContainer').style.display = 'none';
+    document.getElementById('loginContainer').style.display = 'flex';
+    document.getElementById('matricula').value = "";
+    document.getElementById('senha').value = "";
         });
     </script>
 </body>
