@@ -413,3 +413,134 @@ form button:hover {
         color: #000000 !important;
     }
 }
+/* ==========================================================================
+   INTERFAÇE DE MENU LATERAL (SIDEBAR) INTEGRADO AO PORTAL
+   ========================================================================== */
+
+/* Quando o dashboard ativa, transforma o container em uma estrutura flexível */
+body.dashboard-ativo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #f4f6f9; /* Fundo cinza claro para destacar as tabelas brancas */
+}
+
+/* Menu Lateral Esquerdo */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: var(--verde-escuro); /* Utiliza suas variáveis institucionais */
+    color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+    padding: var(--espaco-lg);
+    background-color: var(--verde-escuro-hover);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.sidebar-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.sidebar-header small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: var(--espaco-md) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.menu-item:hover {
+    background-color: var(--verde-escuro-hover);
+    color: var(--branco);
+}
+
+.menu-item.active {
+    background-color: var(--verde-fundo);
+    color: var(--branco);
+    border-left-color: #2ecc71; /* Indicador verde brilhante */
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    padding: var(--espaco-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-sidebar-sair {
+    width: 100%;
+    background-color: var(--vermelho-alerta);
+    color: var(--branco);
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-sidebar-sair:hover {
+    background-color: #900c0c;
+}
+
+/* Redefinição da Área de Conteúdo Principal (Direita) */
+body.dashboard-ativo #dashboardContainer {
+    display: block !important;
+    margin-left: 260px; /* Abre espaço exato para a largura do menu lateral */
+    width: calc(100% - 260px);
+    max-width: 1200px; /* Janela de exibição expandida para visualização otimizada */
+    padding: var(--espaco-lg);
+}
+
+/* Oculta o cabeçalho original antigo para evitar duplicação de informações */
+body.dashboard-ativo .dash-header {
+    display: none !important;
+}
+
+/* Ajuste Responsivo para telas menores/Mobile */
+@media (max-width: 768px) {
+    body.dashboard-ativo {
+        flex-direction: column;
+    }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    body.dashboard-ativo #dashboardContainer {
+        margin-left: 0;
+        width: 100%;
+        padding: var(--espaco-md);
+    }
+}
