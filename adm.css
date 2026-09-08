@@ -32,18 +32,75 @@ body {
     color: var(--cinza-secundario);
 }
 
-#blocoServidor {
-    background-color: var(--branco);
-    box-shadow: var(--sombra-padrao);
-    padding: var(--espaco-lg);
-    border-radius: var(--borda-radius-lg);
+/* --- ESTILOS DO MENU RETRÁTIL (ACCORDION) --- */
+.painel-retratil-container {
+    padding: 0 !important; /* Permite que o cabeçalho preencha as bordas */
+    overflow: hidden;
     margin-bottom: var(--espaco-lg);
+}
+
+.titulo-retratil {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--branco);
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.titulo-retratil:hover {
+    background-color: #f9f9f9;
+}
+
+.titulo-retratil h3 {
+    color: var(--verde-tabela);
+    margin: 0;
+    font-size: 16px;
+}
+
+.seta-retratil {
+    font-size: 14px;
+    color: var(--cinza-secundario);
+    transition: transform 0.3s ease;
+}
+
+/* O conteúdo começa fechado por padrão */
+.conteudo-retratil {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    opacity: 0;
+    transition: max-height 0.3s ease-out, padding 0.3s ease, opacity 0.2s ease;
     color: var(--cinza-texto);
 }
 
-#blocoServidor h3 {
-    color: var(--verde-tabela);
-    margin-top: 0;
+/* Classe utilitária ativada via JS para "abrir" o painel deslizando */
+.conteudo-retratil.aberto {
+    max-height: 500px; /* Limite seguro para o conteúdo expandir */
+    padding: 10px 24px 24px 24px;
+    opacity: 1;
+}
+
+.seta-retratil.rodada {
+    transform: rotate(180deg);
+}
+
+.instrucao-painel {
+    color: var(--cinza-secundario);
+    margin-bottom: var(--espaco-md);
+    font-size: 14px;
+}
+
+.secao-gerencial-btn {
+    margin-bottom: var(--espaco-md);
+}
+
+.divisor-painel {
+    height: 1px;
+    background-color: var(--cinza-borda);
+    margin: var(--espaco-md) 0;
 }
 
 #blocoServidor form, #blocoServidor .exportar-selecao {
