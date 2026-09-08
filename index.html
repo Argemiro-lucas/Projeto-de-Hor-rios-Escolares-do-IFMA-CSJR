@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      	    <title>Portal Acadêmico - IFMA</title>
-<link rel="stylesheet" href="variaveis.css">
-<link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="favicon-32x32.png">
+    <title>Portal Acadêmico - IFMA</title>
+    <link rel="stylesheet" href="variaveis.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
 </head>
 <body>
     
-
     <!-- 1. CONTAINER DE LOGIN -->
     <div class="container" id="loginContainer">
         <div class="left-side">
@@ -47,65 +46,88 @@
         </div>
     </div>
 
-    <!-- 2. CONTAINER DO DASHBOARD (CAIXAS ARREDONDADAS DO SEU PRINT) -->
+    <!-- 2. CONTAINER DO DASHBOARD (COM MENU LATERAL INTEGRADO) -->
     <div id="dashboardContainer">
-        <div class="dash-header">
-            <h2>Painel do Sistema de Horários</h2>
-            <div class="user-info">
-                <p>Usuário: <span id="dashMatricula"></span> | Perfil: <span id="dashPerfil"></span> <button class="btn-logout" id="btnSair">Sair</button></p>
+        
+        <!-- MENU LATERAL (SIDEBAR) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Portal SUAP</h3>
+                <small>Matrícula: <span id="dashMatricula"></span></small><br>
+                <small>Perfil: <span id="dashPerfil"></span></small>
             </div>
-        </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" data-target="aluno">
+                    📊 Meu Horário
+                </a>
+                <a href="#" class="menu-item" data-target="professor">
+                    👨‍🏫 Painel Professor
+                </a>
+                <a href="#" class="menu-item" data-target="servidor">
+                    ⚙️ Painel Servidor
+                </a>
+            </nav>
 
-     
-        <div class="filtro-secao">
-            <label for="filtroCurso">Selecione o Curso para visualizar a Grade:</label>
-            <select id="filtroCurso">
-                <option value="informatica">Informática</option>
-                <option value="adm">Administração</option>
-                <option value="jogos">Jogos Digitais</option>
-                <option value="eletro">EletroEletrônica</option>
-            </select>
-
-            <label for="filtroSemestre" style="margin-left: 20px;">Período Letivo:</label>
-            <select id="filtroSemestre">
-                <option value="atual">Semestre Atual</option>
-                <option value="proximo" selected>Próximo Semestre</option>
-                <option value="2026.1">Semestre Passado (2026.1)</option>
-            </select>
-       <label for="filtroTurno" style="margin-left: 20px;">
-        Turno:
-    </label>
-
-    <select id="filtroTurno">
-        <option value="manha">Matutino</option>
-        <option value="tarde">Vespertino</option>
-        <option value="noite">Noturno</option>
-    </select>
-        </div>
-
-        <!-- MOLDURA CAIXA BRANCA UNIFICADA PARA O TÍTULO E A TABELA -->
-        <div class="grade-container-branca">
-            <h2 id="tituloGrade">Horários e Disciplinas</h2>
-            <div class="tabela-container">
-                <table class="tabela-horarios">
-                    <thead>
-                        <tr>
-                            <th>Horário (Turno)</th>
-                            <th>Segunda-feira</th>
-                            <th>Terça-feira</th>
-                            <th>Quarta-feira</th>
-                            <th>Quinta-feira</th>
-                            <th>Sexta-feira</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoTabelaHorarios">
-                        <!-- Linhas geradas via JavaScript -->
-                    </tbody>
-                </table>
+            <div class="sidebar-footer">
+                <button id="btnSair" class="btn-sidebar-sair">Sair do Sistema</button>
             </div>
-        </div>
+        </aside>
+
+        <!-- ÁREA DE CONTEÚDO PRINCIPAL (À DIREITA DO MENU) -->
+        <main class="content-area">
+            
+            <!-- SEÇÃO DE FILTROS MANTIDA INTACTA -->
+            <div class="filtro-secao">
+                <label for="filtroCurso">Selecione o Curso para visualizar a Grade:</label>
+                <select id="filtroCurso">
+                    <option value="informatica">Informática</option>
+                    <option value="adm">Administração</option>
+                    <option value="jogos">Jogos Digitais</option>
+                    <option value="eletro">EletroEletrônica</option>
+                </select>
+
+                <label for="filtroSemestre" style="margin-left: 20px;">Período Letivo:</label>
+                <select id="filtroSemestre">
+                    <option value="atual">Semestre Atual</option>
+                    <option value="proximo" selected>Próximo Semestre</option>
+                    <option value="2026.1">Semestre Passado (2026.1)</option>
+                </select>
+
+                <label for="filtroTurno" style="margin-left: 20px;">Turno:</label>
+                <select id="filtroTurno">
+                    <option value="manha">Matutino</option>
+                    <option value="tarde">Vespertino</option>
+                    <option value="noite">Noturno</option>
+                </select>
+            </div>
+
+            <!-- MOLDURA CAIXA BRANCA DA TABELA MANTIDA INTACTA -->
+            <div class="grade-container-branca">
+                <h2 id="tituloGrade">Horários e Disciplinas</h2>
+                <div class="tabela-container">
+                    <table class="tabela-horarios">
+                        <thead>
+                            <tr>
+                                <th>Horário (Turno)</th>
+                                <th>Segunda-feira</th>
+                                <th>Terça-feira</th>
+                                <th>Quarta-feira</th>
+                                <th>Quinta-feira</th>
+                                <th>Sexta-feira</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaHorarios">
+                            <!-- Linhas geradas via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
     </div>
-           <!-- Primeiro carrega o comum, depois o específico -->
+
+    <!-- Scripts do Sistema -->
     <script src="comum.js"></script>
     <script src="index.js"></script>
 </body>
