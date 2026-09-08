@@ -15,9 +15,11 @@ body {
     flex: 1;
     background-color: var(--branco);
     border-radius: var(--borda-radius-lg);
-    box-shadow: var(--sombra-padrao);
     padding: var(--espaco-lg);
     text-align: center;
+    /* --- CORREÇÃO DE VISIBILIDADE --- */
+    border: 1px solid #dcdcdc !important; 
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07) !important; 
 }
 
 .card-numero {
@@ -39,8 +41,8 @@ body {
     margin-bottom: var(--espaco-lg);
     background-color: var(--branco);
     border-radius: var(--borda-radius-lg);
-    box-shadow: var(--sombra-padrao);
-    border: 1px solid var(--cinza-borda);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07) !important;
+    border: 1px solid #dcdcdc !important;
 }
 
 .titulo-retratil {
@@ -334,13 +336,23 @@ body {
     background-color: var(--verde-escuro-hover);
 }
 
+/* --- CLASSE GLOBAL PARA AS CAIXAS GERAIS (.grade-container-branca) --- */
+.grade-container-branca {
+    background-color: var(--branco) !important;
+    border-radius: var(--borda-radius-lg) !important;
+    border: 1px solid #dcdcdc !important; 
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07) !important; 
+    padding: var(--espaco-lg) !important;
+    margin-bottom: var(--espaco-lg) !important;
+}
+
 @media (max-width: 768px) {
     .cards-resumo { flex-direction: column; }
     .botoes-sync { flex-direction: column; }
 }
 
 @keyframes girarSUAP {
-    0% { transform: rotate(0deg); }
+    0 { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
