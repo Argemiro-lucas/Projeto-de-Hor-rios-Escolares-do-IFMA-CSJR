@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="variaveis.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="adm.css">
-    <link rel="icon" type="image/png" href="favicon-32x32.png">
 </head>
 <body class="dashboard-ativo">
 
@@ -36,44 +35,59 @@
             </div>
         </section>
 
-        <!-- PAINEL GERENCIAL -->
-        <div id="blocoServidor">
-            <h3>⚙️ Painel Gerencial do Servidor</h3>
-            <p>Menu de gerenciamento ativo. Você possui permissões para importar arquivos XML.</p>
-
-            <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
-                <label for="arquivoXML">Arquivo XML:</label>
-                <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
-                <button type="submit">📥 Importar</button>
-                <div id="statusImportacao"></div>
-            </form>
-
-            <div class="exportar-selecao">
-                <label for="exportCurso">Curso:</label>
-                <select id="exportCurso">
-                    <option value="informatica">Informática</option>
-                    <option value="adm">Administração</option>
-                    <option value="jogos">Jogos Digitais</option>
-                    <option value="eletro">EletroEletrônica</option>
-                </select>
-                <label for="exportSemestre">Semestre:</label>
-                <select id="exportSemestre">
-                    <option value="atual">Semestre Atual</option>
-                    <option value="proximo">Próximo Semestre</option>
-                    <option value="2026.1">Semestre Passado (2026.1)</option>
-                </select>
+        <!-- PAINEL GERENCIAL RETRÁTIL -->
+        <div class="grade-container-branca painel-retratil-container">
+            <!-- Título clicável que controla a abertura -->
+            <div id="btnAlternarPainel" class="titulo-retratil">
+                <h3>⚙️ Painel Gerencial do Servidor</h3>
+                <span class="seta-retratil" id="setaPainel">▼</span>
             </div>
+            
+            <!-- Conteúdo que vai "abrir" para baixo -->
+            <div id="blocoServidor" class="conteudo-retratil">
+                <p class="instrucao-painel">Menu de gerenciamento ativo. Você possui permissões para gerenciar professores e importar arquivos XML.</p>
 
-            <form id="formExportar" action="#" method="get">
-                <button type="submit">📤 Exportar</button>
-            </form>
+                <!-- BOTÃO DE CADASTRO MOVIDO PARA CÁ -->
+                <div class="secao-gerencial-btn">
+                    <button type="button" id="btnAbrirCadastro" class="btn-sync">➕ Cadastrar Professor Manualmente</button>
+                </div>
+
+                <div class="divisor-painel"></div>
+
+                <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
+                    <label for="arquivoXML">Arquivo XML:</label>
+                    <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
+                    <button type="submit">📥 Importar XML</button>
+                    <div id="statusImportacao"></div>
+                </form>
+
+                <div class="exportar-selecao">
+                    <label for="exportCurso">Curso:</label>
+                    <select id="exportCurso">
+                        <option value="informatica">Informática</option>
+                        <option value="adm">Administração</option>
+                        <option value="jogos">Jogos Digitais</option>
+                        <option value="eletro">EletroEletrônica</option>
+                    </select>
+                    <label for="exportSemestre">Semestre:</label>
+                    <select id="exportSemestre">
+                        <option value="atual">Semestre Atual</option>
+                        <option value="proximo">Próximo Semestre</option>
+                        <option value="2026.1">Semestre Passado (2026.1)</option>
+                    </select>
+                </div>
+
+                <form id="formExportar" action="#" method="get">
+                    <button type="submit">📤 Exportar XML</button>
+                </form>
+            </div>
         </div>
 
-        <!-- T5.2: Sincronização SUAP -->
+        <!-- T5.2: Sincronização SUAP (Limpo e Original) -->
         <div class="grade-container-branca">
             <h2>Sincronização com o SUAP</h2>
             <div class="botoes-sync">
-                <button type="button" id="btnAbrirCadastro" class="btn-sync">Importar Professores</button>
+                <button type="button" class="btn-sync">Importar Professores</button>
                 <button type="button" class="btn-sync">Atualizar Salas</button>
                 <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
             </div>
@@ -81,7 +95,7 @@
         </div>
 
         <!-- T5.3: Validador de Conflitos -->
-        <div class="grade-container-branca">
+        <div class="grade-container-branca" style="margin-top: 20px;">
             <h2>Validação de Conflitos</h2>
             <div class="alerta-conflito alerta-warning">
               ⚠️ Nenhum conflito detectado no momento. (placeholder Fase 5)
