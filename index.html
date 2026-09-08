@@ -130,5 +130,37 @@
     <!-- Scripts do Sistema -->
     <script src="comum.js"></script>
     <script src="index.js"></script>
+
+    <!-- O NOVO SCRIPT ENTRA EXATAMENTE AQUI -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const itensMenu = document.querySelectorAll('.menu-item');
+            itensMenu.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPainel = this.getAttribute('data-target');
+                    const perfilUsuario = sessionStorage.getItem('perfil');
+
+                    if (targetPainel === 'aluno') {
+                        // Se já estiver no index.html, não faz nada além de reativar visualmente o menu
+                        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                    } else if (targetPainel === 'professor') {
+                        if (perfilUsuario === 'Professor' || perfilUsuario === 'Servidor') {
+                            window.location.href = 'professor.html';
+                        } else {
+                            alert('Acesso negado: Este painel é restrito para Professores.');
+                        }
+                    } else if (targetPainel === 'servidor') {
+                        if (perfilUsuario === 'Servidor') {
+                            window.location.href = 'adm.html';
+                        } else {
+                            alert('Acesso negado: Este painel é de uso exclusivo da equipe de Servidores.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
