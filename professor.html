@@ -12,69 +12,123 @@
 <body class="dashboard-ativo">
 
     <div id="dashboardContainer" style="display:block;">
-        <div class="dash-header">
-            <h2>Painel do Professor</h2>
-            <div class="user-info">
-                <p>Usuário: <span id="dashMatricula"></span> | Perfil: <span id="dashPerfil"></span>
-                <button class="btn-logout" id="btnSair">Sair</button></p>
+        
+        <!-- MENU LATERAL (SIDEBAR) UNIFICADO -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Portal SUAP</h3>
+                <small>Matrícula: <span id="dashMatricula"></span></small><br>
+                <small>Perfil: <span id="dashPerfil"></span></small>
             </div>
-        </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item" data-target="aluno">
+                    📊 Meu Horário
+                </a>
+                <a href="#" class="menu-item active" data-target="professor">
+                    👨‍🏫 Painel Professor
+                </a>
+                <a href="#" class="menu-item" data-target="servidor">
+                    ⚙️ Painel Servidor
+                </a>
+            </nav>
 
-        <!-- T4.1: Consulta do Professor -->
-        <section class="filtro-secao" aria-label="Selecionar docente">
-            <label for="filtroDocente">Selecione o Docente:</label>
-            <select id="filtroDocente">
-                <option value="">-- Escolha um professor --</option>
-                <!-- TODO Fase 4: popular via SUAP -->
-            </select>
-        </section>
-
-        <div class="grade-container-branca">
-            <h2 id="tituloGradeProfessor">Grade Consolidada do Docente</h2>
-            <div class="tabela-container">
-                <table class="tabela-horarios">
-                    <thead>
-                        <tr>
-                            <th>Horário</th>
-                            <th>Segunda-feira</th>
-                            <th>Terça-feira</th>
-                            <th>Quarta-feira</th>
-                            <th>Quinta-feira</th>
-                            <th>Sexta-feira</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoTabelaProfessor">
-                        <tr><td colspan="6" style="color:#999;padding:20px;">Selecione um docente para ver a grade. (Fase 4)</td></tr>
-                    </tbody>
-                </table>
+            <div class="sidebar-footer">
+                <button id="btnSair" class="btn-sidebar-sair">Sair do Sistema</button>
             </div>
-        </div>
+        </aside>
 
-        <!-- T4.2: Mapa de Alocação de Salas (ATUALIZADO) -->
-        <div class="grade-container-branca">
-            <h2>Mapa de Alocação de Salas (Ocupação Física)</h2>
-            <div class="tabela-container">
-                <table class="tabela-horarios">
-                    <thead>
-                        <tr>
-                            <th>Sala / Bloco</th>
-                            <th>Curso / Turma Alocada</th>
-                            <th>Professor Responsável</th>
-                            <th>Status de Uso</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoMapaSalas">
-                        <!-- Linhas injetadas dinamicamente pelo arquivo professor.js -->
-                    </tbody>
-                </table>
+        <!-- ÁREA DE CONTEÚDO PRINCIPAL (À DIREITA DO MENU) -->
+        <main class="content-area">
+
+            <!-- T4.1: Consulta do Professor -->
+            <section class="filtro-secao" aria-label="Selecionar docente">
+                <label for="filtroDocente">Selecione o Docente:</label>
+                <select id="filtroDocente">
+                    <option value="">-- Escolha um professor --</option>
+                    <!-- TODO Fase 4: popular via SUAP -->
+                </select>
+            </section>
+
+            <!-- GRADE HORÁRIA DO DOCENTE -->
+            <div class="grade-container-branca">
+                <h2 id="tituloGradeProfessor">Grade Consolidada do Docente</h2>
+                <div class="tabela-container">
+                    <table class="tabela-horarios">
+                        <thead>
+                            <tr>
+                                <th>Horário</th>
+                                <th>Segunda-feira</th>
+                                <th>Terça-feira</th>
+                                <th>Quarta-feira</th>
+                                <th>Quinta-feira</th>
+                                <th>Sexta-feira</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaProfessor">
+                            <tr><td colspan="6" style="color:#999;padding:20px;">Selecione um docente para ver a grade. (Fase 4)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <!-- T4.3: Exportar Grade (baixa prioridade) -->
-        <button type="button" id="btnImprimirHorario" class="btn-imprimir">🖨️ Imprimir Horário</button>
+            <!-- T4.2: Mapa de Alocação de Salas -->
+            <div class="grade-container-branca">
+                <h2>Mapa de Alocação de Salas (Ocupação Física)</h2>
+                <div class="tabela-container">
+                    <table class="tabela-horarios">
+                        <thead>
+                            <tr>
+                                <th>Sala / Bloco</th>
+                                <th>Curso / Turma Alocada</th>
+                                <th>Professor Responsável</th>
+                                <th>Status de Uso</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoMapaSalas">
+                            <!-- Linhas injetadas dinamicamente pelo arquivo professor.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- T4.3: Exportar/Imprimir Grade -->
+            <button type="button" id="btnImprimirHorario" class="btn-imprimir">🖨️ Imprimir Horário</button>
+
+        </main>
     </div>
   
     <script src="comum.js"></script>
     <script src="professor.js"></script>
+    
+    <!-- Script para ativar o comportamento de clique deste menu lateral -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const itensMenu = document.querySelectorAll('.menu-item');
+            itensMenu.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPainel = this.getAttribute('data-target');
+                    const perfilUsuario = sessionStorage.getItem('perfil');
+
+                    if (targetPainel === 'professor') {
+                        if (perfilUsuario === 'Professor' || perfilUsuario === 'Servidor') {
+                            window.location.href = 'professor.html';
+                        } else {
+                            alert('Acesso negado: Este painel é restrito para Professores.');
+                        }
+                    } else if (targetPainel === 'servidor') {
+                        if (perfilUsuario === 'Servidor') {
+                            window.location.href = 'adm.html';
+                        } else {
+                            alert('Acesso negado: Este painel é de uso exclusivo da equipe de Servidores.');
+                        }
+                    } else if (targetPainel === 'aluno') {
+                        window.location.href = 'index.html';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
