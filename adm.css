@@ -209,42 +209,55 @@ body {
 }
 
 .modal-conteudo {
-    background-color: var(--branco);
+    background-color: var(--branco) !important;
     padding: var(--espaco-lg);
     border-radius: var(--borda-radius-lg);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 500px;
     position: relative;
-    color: var(--cinza-texto);
+    color: var(--cinza-texto) !important;
     text-align: left;
 }
 
 .modal-conteudo h2 {
-    color: var(--verde-tabela);
+    color: var(--verde-tabela) !important;
     margin-top: 0;
     font-size: 20px;
+    font-weight: bold;
 }
 
 .modal-conteudo .campo-grupo {
     margin-bottom: var(--espaco-sm);
 }
 
-.modal-conteudo label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: var(--espaco-xs);
+/* CORREÇÃO DO TEXTO INVISÍVEL: Força rótulos escuros e legíveis sobre fundo branco */
+.modal-cadastro .campo-grupo label {
+    display: block !important;
+    color: var(--cinza-texto) !important; 
+    font-size: 14px !important;
+    font-weight: bold !important;
+    margin-bottom: var(--espaco-xs) !important;
 }
 
-.modal-conteudo input[type="text"], 
-.modal-conteudo select {
-    width: 100%; 
-    padding: 8px; 
-    border: 1px solid var(--cinza-borda); 
-    border-radius: 4px; 
-    background: var(--branco); 
-    color: var(--cinza-texto);
-    box-sizing: border-box;
+/* CORREÇÃO DO TEXTO INVISÍVEL: Força cor contrastante para os dados digitados e opções */
+.modal-cadastro .campo-grupo input[type="text"], 
+.modal-cadastro .campo-grupo select {
+    width: 100% !important; 
+    padding: 8px 12px !important; 
+    border: 1px solid var(--cinza-borda) !important; 
+    border-radius: 4px !important; 
+    background-color: var(--branco) !important; 
+    color: var(--cinza-texto) !important;
+    font-size: 14px !important;
+    height: 38px !important;
+    box-sizing: border-box !important;
+}
+
+/* Ajuste fino nos placeholders (textos de exemplo dentro das caixas) */
+.modal-cadastro .campo-grupo input::placeholder {
+    color: var(--cinza-secundario) !important;
+    opacity: 0.8;
 }
 
 .fechar-modal {
@@ -281,10 +294,28 @@ body {
     font-weight: bold;
 }
 
+/* NOVO: Estilo exclusivo para o botão de cadastro manual (Desvinculado do Spinner Sync) */
+.btn-cadastro-manual {
+    background-color: var(--verde-tabela);
+    color: var(--branco);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-cadastro-manual:hover {
+    background-color: var(--verde-escuro-hover);
+}
+
 @media (max-width: 768px) {
     .cards-resumo { flex-direction: column; }
     .botoes-sync { flex-direction: column; }
 }
+
 /* Animação de rotação (Spinner) para simular carregamento */
 @keyframes girarSUAP {
     0% { transform: rotate(0deg); }
