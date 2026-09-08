@@ -176,7 +176,7 @@ if (loginForm) {
         if (matricula.startsWith("20")) perfil = "Aluno";
         else if (matricula.startsWith("10")) perfil = "Professor";
         else if (matricula.startsWith("00")) perfil = "Servidor";
-        // Validação de segurança baseada na memória permanente de professores
+               // Validação de segurança em paralelo baseada na memória permanente de professores
         if (perfil === 'Professor') {
             const professoresCadastrados = JSON.parse(localStorage.getItem('professores') || '[]');
             const profExistente = professoresCadastrados.find(p => p.matricula === matricula);
@@ -189,7 +189,7 @@ if (loginForm) {
             sessionStorage.setItem('nomeProfessorLogado', profExistente.nome);
         }
         
-        // Grava as informações no sessionStorage
+        // Grava as informações exigidas pelo seu comum.js
         sessionStorage.setItem('matricula', matricula);
         sessionStorage.setItem('perfil', perfil);
         
@@ -202,64 +202,104 @@ if (loginForm) {
             return;
         }
         
-        // Fluxo do Aluno: Exibe o dashboard e monta a primeira tabela
-        document.body.classList.add('dashboard-ativo');
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('dashboardContainer').style.display = 'block';
-        document.getElementById('dashMatricula').textContent = matricula;
-        document.getElementById('dashPerfil').textContent = perfil;
-        
-              // ... final do evento de login submit do seu arquivo anterior
-
-        atualizarVisualizacao();
+        ativarDashboardTela(matricula, perfil);
     });
 }
 
-// =========================================================================
-// CONTROLE DE NAVEGAÇÃO DO MENU LATERAL BASEADO NAS REGRAS DO SUAP
-// =========================================================================
-function inicializarMenuLateral() {
-    const itensMenu = document.querySelectorAll('.menu-item');
-    if (!itensMenu) return;
+// NOVA FUNÇÃO: Gerencia a persistência da sessão do Servidor na página de visualização
+function verificarSessaoAtiva() {
+    const matriculaSalva = sessionStorage.getItem('matricula');
+    const perfilSalvo = sessionStorage.getItem('perfil');
 
-    itensMenu.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetPainel = this.getAttribute('data-target');
-            const perfilUsuario = sessionStorage.getItem('perfil'); // Captura se é Aluno, Professor ou Servidor
+    if (matriculaSalva && perfilSalvo) {
+        ativarDashboardTela(matriculaSalva, perfilSalvo);
+    }
+}
 
-            if (targetPainel === 'professor') {
-                if (perfilUsuario === 'Professor' || perfilUsuario === 'Servidor') {
-                    window.location.href = 'professor.html';
-                } else {
-                    alert('Acesso negado: Este painel é restrito para Professores e Servidores.');
-                }
-            } 
+function ativarDashboardTela(matricula, perfil) {
+    document.body.classList.add('dashboard-ativo');
+    
+    if (document.getElementById('loginContainer')) document.getElementById('loginContainer').style.display = 'none';
+    if (document.getElementById('dashboardContainer')) document.getElementById('dashboardContainer').style.display = 'block';
+    if (document.getElementById('dashMatricula')) document.getElementById('dashMatricula').textContent = matricula;
+    if (document.getElementById('dashPerfil')) document.getElementById('dashPerfil').textContent = perfil;
+    
+    // Adiciona um aviso visual no topo da tabela se for o Servidor
+    if (perfil === "Servidor") {
+        const gradeContainer = document.querySelector('.grade-container-branca');
+        if (gradeContainer && !document.getElementById('avisoEdicao')) {
+            const aviso = document.createElement('div');
+            aviso.id = 'avisoEdicao';
+            aviso.style.cssText = "background:#e8f5e9; color:#2e7d32; padding:10px; border-radius:6px; margin-bottom:15px; font-weight:bold; font-size:13px; border:1px solid #a5d6a7;";
+            aviso.innerHTML = "📝 Modo de Edição Ativo: Clique diretamente em qualquer matéria ou professor na tabela abaixo para alterar o horário em tempo real.";
+            gradeContainer.insertBefore(aviso, gradeContainer.firstChild);
+        }
+    }
+
+    atualizarVisualizacao();
+    ativarEdicaoAoVivo();
+}
+
+// NOVA FUNÇÃO: Monitora e torna a tabela editável caso o usuário seja o Servidor
+function activarEdicaoAoVivo() {
+    const perfil = sessionStorage.getItem('perfil');
+    if (perfil !== "Servidor") return;
+
+    const materiasCells = document.querySelectorAll('#corpoTabelaHorarios td.materia');
+    
+    materiasCells.forEach((celula, celulaIndex) => {
+        // Habilita a edição direta pelo teclado
+        celula.contentEditable = "true";
+        celula.style.cursor = "pointer";
+        celula.style.backgroundColor = "#fffde7"; // Tom levemente amarelado para indicar bloco editável
+
+        // Salva a alteração assim que o Servidor clica fora da célula (blur)
+        celula.addEventListener('blur', function() {
+            const curso = document.getElementById('filtroCurso').value;
+            const semestre = document.getElementById('filtroSemestre').value;
+            const turno = document.getElementById('filtroTurno').value;
             
-            else if (targetPainel === 'servidor') {
-                if (perfilUsuario === 'Servidor') {
-                    window.location.href = 'adm.html';
-                } else {
-                    alert('Acesso negado: Este painel é de uso exclusivo da equipe de Servidores.');
+            // Descobre qual linha da tabela (index) corresponde à alteração
+            const trPai = this.parentElement;
+            const todasAsLinhas = Array.from(document.querySelectorAll('#corpoTabelaHorarios tr'));
+            const linhaIndex = todasAsLinhas.indexOf(trPai);
+
+            // Mapeia qual dia da semana foi editado com base na posição da coluna td
+            const colunas = Array.from(trPai.querySelectorAll('td'));
+            const colIndex = colunas.indexOf(this);
+            const diasSemana = ['hora', 'seg', 'ter', 'qua', 'qui', 'sex'];
+            const diaEditado = diasSemana[colIndex];
+
+            if (bancoHorarios[curso] && bancoHorarios[curso][semestre]) {
+                const dadosSemestre = bancoHorarios[curso][semestre];
+                
+                // Grava o novo HTML digitado no banco de dados local
+                if (Array.isArray(dadosSemestre)) {
+                    dadosSemestre[linhaIndex][diaEditado] = this.innerHTML;
+                } else if (dadosSemestre[turno]) {
+                    dadosSemestre[turno][linhaIndex][diaEditado] = this.innerHTML;
                 }
-            }
-            
-            else if (targetPainel === 'aluno') {
-                // Se já estiver logado no index e for aluno, apenas mantém na tela
-                if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
-                    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                } else {
-                    window.location.href = 'index.html';
-                }
+
+                // Atualiza o banco e salva permanentemente no LocalStorage
+                localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
             }
         });
     });
 }
 
-// Dispara a montagem do menu ao carregar a página
-document.addEventListener("DOMContentLoaded", inicializarMenuLateral);
+// Adiciona um gatilho para re-aplicar os eventos de edição toda vez que o Servidor mudar de curso/turno nos filtros
+const filtros = ['filtroCurso', 'filtroSemestre', 'filtroTurno'];
+filtros.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener('change', () => {
+            setTimeout(ativarEdicaoAoVivo, 50); // Delay curto para esperar a tabela renderizar as novas matérias
+        });
+    }
+});
+
+// Inicializa a verificação automática de sessão ao carregar
+verificarSessaoAtiva();
 
 // Chamada protegida da função externa de logout
 if (typeof configurarBotaoSair === "function") {
