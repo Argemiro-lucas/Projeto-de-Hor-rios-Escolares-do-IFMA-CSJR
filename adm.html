@@ -12,96 +12,119 @@
 <body class="dashboard-ativo">
 
     <div id="dashboardContainer" style="display:block;">
-        <div class="dash-header">
-            <h2>Painel Administrativo</h2>
-            <div class="user-info">
-                <p>Usuário: <span id="dashMatricula"></span> | Perfil: <span id="dashPerfil"></span>
-                <button class="btn-logout" id="btnSair">Sair</button></p>
-            </div>
-        </div>
-
-        <!-- T5.1: Painel Administrativo (atalhos e contadores) -->
-        <section class="cards-resumo">
-            <div class="card-resumo">
-                <span class="card-numero">4</span>
-                <span class="card-label">Cursos ativos</span>
-            </div>
-            <div class="card-resumo">
-                <span class="card-numero">--</span>
-                <span class="card-label">Professores cadastrados</span>
-            </div>
-            <div class="card-resumo">
-                <span class="card-numero">--</span>
-                <span class="card-label">Salas em uso</span>
-            </div>
-        </section>
-
-        <!-- PAINEL GERENCIAL RETRÁTIL -->
-        <div class="grade-container-branca painel-retratil-container">
-            <!-- Título clicável que controla a abertura -->
-            <div id="btnAlternarPainel" class="titulo-retratil">
-                <h3>⚙️ Painel Gerencial do Servidor</h3>
-                <span class="seta-retratil" id="setaPainel">▼</span>
+        
+        <!-- MENU LATERAL (SIDEBAR) UNIFICADO -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Portal SUAP</h3>
+                <small>Matrícula: <span id="dashMatricula"></span></small><br>
+                <small>Perfil: <span id="dashPerfil"></span></small>
             </div>
             
-            <!-- Conteúdo que vai "abrir" para baixo -->
-            <div id="blocoServidor" class="conteudo-retratil">
-                <p class="instrucao-painel">Menu de gerenciamento ativo. Você possui permissões para gerenciar professores e importar arquivos XML.</p>
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item" data-target="aluno">
+                    📊 Meu Horário
+                </a>
+                <a href="#" class="menu-item" data-target="professor">
+                    👨‍🏫 Painel Professor
+                </a>
+                <a href="#" class="menu-item active" data-target="servidor">
+                    ⚙️ Painel Servidor
+                </a>
+            </nav>
 
-                <!-- BOTÃO DE CADASTRO MOVIDO PARA CÁ -->
-                <div class="secao-gerencial-btn">
-                    <button type="button" id="btnAbrirCadastro" class="btn-sync">➕ Cadastrar Professor Manualmente</button>
+            <div class="sidebar-footer">
+                <button id="btnSair" class="btn-sidebar-sair">Sair do Sistema</button>
+            </div>
+        </aside>
+
+        <!-- ÁREA DE CONTEÚDO PRINCIPAL (À DIREITA DO MENU) -->
+        <main class="content-area">
+
+            <!-- T5.1: Painel Administrativo (atalhos e contadores) -->
+            <section class="cards-resumo">
+                <div class="card-resumo">
+                    <span class="card-numero">4</span>
+                    <span class="card-label">Cursos ativos</span>
                 </div>
-
-                <div class="divisor-painel"></div>
-
-                <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
-                    <label for="arquivoXML">Arquivo XML:</label>
-                    <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
-                    <button type="submit">📥 Importar XML</button>
-                    <div id="statusImportacao"></div>
-                </form>
-
-                <div class="exportar-selecao">
-                    <label for="exportCurso">Curso:</label>
-                    <select id="exportCurso">
-                        <option value="informatica">Informática</option>
-                        <option value="adm">Administração</option>
-                        <option value="jogos">Jogos Digitais</option>
-                        <option value="eletro">EletroEletrônica</option>
-                    </select>
-                    <label for="exportSemestre">Semestre:</label>
-                    <select id="exportSemestre">
-                        <option value="atual">Semestre Atual</option>
-                        <option value="proximo">Próximo Semestre</option>
-                        <option value="2026.1">Semestre Passado (2026.1)</option>
-                    </select>
+                <div class="card-resumo">
+                    <span class="card-numero">--</span>
+                    <span class="card-label">Professores cadastrados</span>
                 </div>
+                <div class="card-resumo">
+                    <span class="card-numero">--</span>
+                    <span class="card-label">Salas em uso</span>
+                </div>
+            </section>
 
-                <form id="formExportar" action="#" method="get">
-                    <button type="submit">📤 Exportar XML</button>
-                </form>
-            </div>
-        </div>
+            <!-- PAINEL GERENCIAL RETRÁTIL -->
+            <div class="grade-container-branca painel-retratil-container">
+                <!-- Título clicável que controla a abertura -->
+                <div id="btnAlternarPainel" class="titulo-retratil">
+                    <h3>⚙️ Painel Gerencial do Servidor</h3>
+                    <span class="seta-retratil" id="setaPainel">▼</span>
+                </div>
+                
+                <!-- Conteúdo que vai "abrir" para baixo -->
+                <div id="blocoServidor" class="conteudo-retratil">
+                    <p class="instrucao-painel">Menu de gerenciamento ativo. Você possui permissões para gerenciar professores e importar arquivos XML.</p>
 
-        <!-- T5.2: Sincronização SUAP (Limpo e Original) -->
-        <div class="grade-container-branca">
-            <h2>Sincronização com o SUAP</h2>
-            <div class="botoes-sync">
-                <button type="button" class="btn-sync">Importar Professores</button>
-                <button type="button" class="btn-sync">Atualizar Salas</button>
-                <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
-            </div>
-            <p class="sync-status">Última sincronização: <em>nunca (Fase 5)</em></p>
-        </div>
+                    <!-- BOTÃO DE CADASTRO MANUAL -->
+                    <div class="secao-gerencial-btn">
+                        <button type="button" id="btnAbrirCadastro" class="btn-sync">➕ Cadastrar Professor Manualmente</button>
+                    </div>
 
-        <!-- T5.3: Validador de Conflitos -->
-        <div class="grade-container-branca" style="margin-top: 20px;">
-            <h2>Validação de Conflitos</h2>
-            <div class="alerta-conflito alerta-warning">
-              ⚠️ Nenhum conflito detectado no momento. (placeholder Fase 5)
+                    <div class="divisor-painel"></div>
+
+                    <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
+                        <label for="arquivoXML">Arquivo XML:</label>
+                        <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
+                        <button type="submit">📥 Importar XML</button>
+                        <div id="statusImportacao"></div>
+                    </form>
+
+                    <div class="exportar-selecao">
+                        <label for="exportCurso">Curso:</label>
+                        <select id="exportCurso">
+                            <option value="informatica">Informática</option>
+                            <option value="adm">Administração</option>
+                            <option value="jogos">Jogos Digitais</option>
+                            <option value="eletro">EletroEletrônica</option>
+                        </select>
+                        <label for="exportSemestre">Semestre:</label>
+                        <select id="exportSemestre">
+                            <option value="atual">Semestre Atual</option>
+                            <option value="proximo">Próximo Semestre</option>
+                            <option value="2026.1">Semestre Passado (2026.1)</option>
+                        </select>
+                    </div>
+
+                    <form id="formExportar" action="#" method="get">
+                        <button type="submit">📤 Exportar XML</button>
+                    </form>
+                </div>
             </div>
-        </div>
+
+            <!-- T5.2: Sincronização SUAP -->
+            <div class="grade-container-branca">
+                <h2>Sincronização com o SUAP</h2>
+                <div class="botoes-sync">
+                    <button type="button" class="btn-sync">Importar Professores</button>
+                    <button type="button" class="btn-sync">Atualizar Salas</button>
+                    <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
+                </div>
+                <p class="sync-status">Última sincronização: <em>nunca (Fase 5)</em></p>
+            </div>
+
+            <!-- T5.3: Validador de Conflitos -->
+            <div class="grade-container-branca" style="margin-top: 20px;">
+                <h2>Validação de Conflitos</h2>
+                <div class="alerta-conflito alerta-warning">
+                  ⚠️ Nenhum conflito detectado no momento. (placeholder Fase 5)
+                </div>
+            </div>
+
+        </main>
     </div>
 
     <!-- JANELA FLUTUANTE (MODAL) DE CADASTRO -->
@@ -136,5 +159,34 @@
     <script src="comum.js"></script>
     <script src="adm.js"></script>
 
+    <!-- Script para ativar o comportamento de clique deste menu lateral -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const itensMenu = document.querySelectorAll('.menu-item');
+            itensMenu.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPainel = this.getAttribute('data-target');
+                    const perfilUsuario = sessionStorage.getItem('perfil');
+
+                    if (targetPainel === 'professor') {
+                        if (perfilUsuario === 'Professor' || perfilUsuario === 'Servidor') {
+                            window.location.href = 'professor.html';
+                        } else {
+                            alert('Acesso negado: Este painel é restrito para Professores.');
+                        }
+                    } else if (targetPainel === 'servidor') {
+                        if (perfilUsuario === 'Servidor') {
+                            window.location.href = 'adm.html';
+                        } else {
+                            alert('Acesso negado: Este painel é de uso exclusivo da equipe de Servidores.');
+                        }
+                    } else if (targetPainel === 'aluno') {
+                        window.location.href = 'index.html';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
