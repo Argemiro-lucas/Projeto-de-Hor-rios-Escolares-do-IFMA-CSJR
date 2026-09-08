@@ -35,19 +35,46 @@
             </div>
         </section>
 
+        <!-- FORMULÁRIO DE CADASTRO DE PROFESSORES (ADICIONADO NESTA VERSÃO) -->
+        <div class="grade-container-branca" style="margin-bottom: 20px;">
+            <h2>➕ Cadastrar Novo Professor (Servidor)</h2>
+            <form id="formCadastroProfessor" style="display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin-top: 15px;">
+                <div>
+                    <label for="cadNome" style="display:block; font-weight:bold; margin-bottom:5px;">Nome do Professor:</label>
+                    <input type="text" id="cadNome" placeholder="Ex: Carlos Silva" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background: white; color: black;">
+                </div>
+                <div>
+                    <label for="cadMatriculaProf" style="display:block; font-weight:bold; margin-bottom:5px;">Matrícula (Deve iniciar com 10):</label>
+                    <input type="text" id="cadMatriculaProf" placeholder="Ex: 101010" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background: white; color: black;">
+                </div>
+                <div>
+                    <label for="cadTurma" style="display:block; font-weight:bold; margin-bottom:5px;">Curso Responsável:</label>
+                    <select id="cadTurma" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background: white; color: black;">
+                        <option value="informatica">Informática</option>
+                        <option value="adm">Administração</option>
+                        <option value="jogos">Jogos Digitais</option>
+                        <option value="eletro">EletroEletrônica</option>
+                    </select>
+                </div>
+                <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px;">Salvar Professor</button>
+            </form>
+            <div id="msgCadastro" style="margin-top: 10px; font-weight: bold;"></div>
+        </div>
+
         <!-- Painel Gerencial: Importar/Exportar -->
-        <div id="blocoServidor">
+        <!-- Caso continue sumido na tela, verifique se a classe ou ID tem "display: none" no seu arquivo adm.css -->
+        <div id="blocoServidor" class="grade-container-branca" style="margin-bottom: 20px;">
             <h3>⚙️ Painel Gerencial do Servidor</h3>
             <p>Menu de gerenciamento ativo. Você possui permissões para importar arquivos XML.</p>
 
-            <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
+            <form id="formImportar" action="#" method="post" enctype="multipart/form-data" style="margin-top: 15px;">
                 <label for="arquivoXML">Arquivo XML:</label>
                 <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
                 <button type="submit">📥 Importar</button>
-                <div id="statusImportacao"></div>
+                <div id="statusImportacao" style="margin-top: 5px; font-weight: bold;"></div>
             </form>
 
-            <div class="exportar-selecao">
+            <div class="exportar-selecao" style="margin-top: 15px;">
                 <label for="exportCurso">Curso:</label>
                 <select id="exportCurso">
                     <option value="informatica">Informática</option>
@@ -55,7 +82,7 @@
                     <option value="jogos">Jogos Digitais</option>
                     <option value="eletro">EletroEletrônica</option>
                 </select>
-                <label for="exportSemestre">Semestre:</label>
+                <label for="exportSemestre" style="margin-left: 15px;">Semestre:</label>
                 <select id="exportSemestre">
                     <option value="atual">Semestre Atual</option>
                     <option value="proximo">Próximo Semestre</option>
@@ -63,16 +90,16 @@
                 </select>
             </div>
 
-            <form id="formExportar" action="#" method="get">
+            <form id="formExportar" action="#" method="get" style="margin-top: 10px;">
                 <button type="submit">📤 Exportar</button>
             </form>
         </div>
 
         <!-- T5.2: Sincronização SUAP -->
-        <div class="grade-container-branca">
+        <div class="grade-container-branca" style="margin-bottom: 20px;">
             <h2>Sincronização com o SUAP</h2>
             <div class="botoes-sync">
-                <button type="button" class="btn-sync">Importar Professores</button>
+                <button type="button" class="btn-sync">Importar Professors</button>
                 <button type="button" class="btn-sync">Atualizar Salas</button>
                 <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
             </div>
@@ -88,9 +115,10 @@
         </div>
     </div>
 
-        <!-- Primeiro carrega o comum, depois o específico -->
+    <!-- Primeiro carrega o comum, depois o específico -->
     <script src="comum.js"></script>
     <script src="adm.js"></script>
 
 </body>
 </html>
+
