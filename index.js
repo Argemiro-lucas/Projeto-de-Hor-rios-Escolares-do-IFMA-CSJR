@@ -76,12 +76,30 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         return;
     }
 
+        // ... (sua validação de tamanho de senha continua igual acima)
+
     msgErro.style.display = "none";
     let perfil = "Aluno";
     if (matricula.startsWith("20")) perfil = "Aluno";
     else if (matricula.startsWith("10")) perfil = "Professor";
     else if (matricula.startsWith("00")) perfil = "Servidor";
 
+    // VALIDAÇÃO ADICIONAL PARA PROFESSORES CADASTRADOS NO BANCO LOCAL
+    if (perfil === 'Professor') {
+        const professoresCadastrados = JSON.parse(localStorage.getItem('professores') || '[]');
+        const profExistente = professoresCadastrados.find(p => p.matricula === matricula);
+        
+        if (!profExistente) {
+            msgErro.textContent = "Acesso negado: Este professor não foi cadastrado pelo Administrador.";
+            msgErro.style.display = "block";
+            return;
+        }
+        
+        // Se existir, guarda o nome dele temporariamente para o painel do professor ler
+        sessionStorage.setItem('nomeProfessorLogado', profExistente.nome);
+    }
+
+    // Grava as informações exigidas pelo seu comum.js
     sessionStorage.setItem('matricula', matricula);
     sessionStorage.setItem('perfil', perfil);
 
@@ -94,6 +112,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         return;
     }
 
+    // Se for Aluno, o fluxo de exibir o dashboard na mesma tela continua aqui:
     document.body.classList.add('dashboard-ativo');
     document.getElementById('loginContainer').style.display = 'none';
     document.getElementById('dashboardContainer').style.display = 'block';
@@ -102,6 +121,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     document.getElementById('dashPerfil').textContent = perfil;
 
     atualizarVisualizacao();
+
 });
 
 configurarBotaoSair();
