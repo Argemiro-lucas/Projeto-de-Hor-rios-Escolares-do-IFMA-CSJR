@@ -1,1 +1,36 @@
+body {
+    align-items: flex-start;
+    padding-top: 60px;
+}
 
+.mapa-salas-placeholder {
+    border: 2px dashed var(--cinza-borda);
+    border-radius: var(--borda-radius);
+    padding: var(--espaco-lg);
+    text-align: center;
+    color: var(--cinza-secundario);
+    font-size: 14px;
+}
+
+.btn-imprimir {
+    background-color: var(--verde-tabela);
+    color: var(--branco);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.btn-imprimir:hover {
+    background-color: var(--verde-escuro-hover);
+}
+
+/* T4.3: ao imprimir, esconde tudo que não é a grade */
+@media print {
+    .dash-header, .filtro-secao, .btn-imprimir, #mapaSalas {
+        display: none;
+    }
+}
