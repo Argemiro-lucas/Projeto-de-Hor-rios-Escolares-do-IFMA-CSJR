@@ -35,7 +35,7 @@
             </div>
         </section>
 
-        <!-- FORMULÁRIO DE CADASTRO DE PROFESSORES (ADICIONADO NESTA VERSÃO) -->
+        <!-- 1. FORMULÁRIO DE CADASTRO DE PROFESSORES -->
         <div class="grade-container-branca" style="margin-bottom: 20px;">
             <h2>➕ Cadastrar Novo Professor (Servidor)</h2>
             <form id="formCadastroProfessor" style="display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin-top: 15px;">
@@ -61,20 +61,19 @@
             <div id="msgCadastro" style="margin-top: 10px; font-weight: bold;"></div>
         </div>
 
-        <!-- Painel Gerencial: Importar/Exportar -->
-        <!-- Caso continue sumido na tela, verifique se a classe ou ID tem "display: none" no seu arquivo adm.css -->
-        <div id="blocoServidor" class="grade-container-branca" style="margin-bottom: 20px;">
+        <!-- 2. PAINEL GERENCIAL: IMPORTAR/EXPORTAR XML (RECOLOCADO) -->
+        <div id="blocoServidor" style="margin-bottom: 20px;">
             <h3>⚙️ Painel Gerencial do Servidor</h3>
             <p>Menu de gerenciamento ativo. Você possui permissões para importar arquivos XML.</p>
 
-            <form id="formImportar" action="#" method="post" enctype="multipart/form-data" style="margin-top: 15px;">
+            <form id="formImportar" action="#" method="post" enctype="multipart/form-data">
                 <label for="arquivoXML">Arquivo XML:</label>
                 <input type="file" id="arquivoXML" name="arquivoXML" accept=".xml,application/xml" required>
                 <button type="submit">📥 Importar</button>
-                <div id="statusImportacao" style="margin-top: 5px; font-weight: bold;"></div>
+                <div id="statusImportacao"></div>
             </form>
 
-            <div class="exportar-selecao" style="margin-top: 15px;">
+            <div class="exportar-selecao">
                 <label for="exportCurso">Curso:</label>
                 <select id="exportCurso">
                     <option value="informatica">Informática</option>
@@ -82,7 +81,7 @@
                     <option value="jogos">Jogos Digitais</option>
                     <option value="eletro">EletroEletrônica</option>
                 </select>
-                <label for="exportSemestre" style="margin-left: 15px;">Semestre:</label>
+                <label for="exportSemestre">Semestre:</label>
                 <select id="exportSemestre">
                     <option value="atual">Semestre Atual</option>
                     <option value="proximo">Próximo Semestre</option>
@@ -90,7 +89,7 @@
                 </select>
             </div>
 
-            <form id="formExportar" action="#" method="get" style="margin-top: 10px;">
+            <form id="formExportar" action="#" method="get">
                 <button type="submit">📤 Exportar</button>
             </form>
         </div>
@@ -99,7 +98,7 @@
         <div class="grade-container-branca" style="margin-bottom: 20px;">
             <h2>Sincronização com o SUAP</h2>
             <div class="botoes-sync">
-                <button type="button" class="btn-sync">Importar Professors</button>
+                <button type="button" class="btn-sync">Importar Professores</button>
                 <button type="button" class="btn-sync">Atualizar Salas</button>
                 <button type="button" class="btn-sync">Sincronizar Disciplinas</button>
             </div>
