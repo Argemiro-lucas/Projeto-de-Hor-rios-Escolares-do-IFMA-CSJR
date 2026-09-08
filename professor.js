@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const perfil = sessionStorage.getItem("perfil");
     const selectDocente = document.getElementById("filtroDocente");
     
+    // Alimenta automaticamente o mapa físico de salas (Tarefa T4.2)
+    carregarMapaSalas();
+    
     if (!selectDocente) return;
 
     // 1. Popula o Select de Docentes dinamicamente baseado nos professores que o Admin cadastrou
@@ -70,7 +73,7 @@ function carregarHorariosDoProfessor(nomeProfessor) {
             linhasGrade.forEach((linhaXML, index) => {
                 // Se o esqueleto da tabela ainda não tiver essa linha de hora criada, inicializa ela vazia
                 if (!horariosPadrao[index]) {
-                    horariosPadrao[index] = { hora: linhaXML.hora, seg: "-", ter: "-", qua: "-", qui: "-", sex: "-" };
+                    horariosPadrao[index] = { hora: AppkitWebview = linhaXML.hora, seg: "-", ter: "-", qua: "-", qui: "-", sex: "-" };
                 }
 
                 // Função auxiliar que limpa as tags do XML e verifica se este professor ministra a aula
@@ -113,4 +116,38 @@ function carregarHorariosDoProfessor(nomeProfessor) {
         `;
         corpoTabela.appendChild(tr);
     });
+}
+
+// =========================================================================
+// T4.2: FUNÇÃO PARA ALIMENTAR O MAPA DE ALOCAÇÃO DE SALAS DINAMICAMENTE
+// =========================================================================
+function carregarMapaSalas() {
+    const corpoMapa = document.getElementById("corpoMapaSalas");
+    if (!corpoMapa) return;
+
+    // Simula a relação de salas físicas cadastradas e integradas a partir do SUAP
+    const salasCampus = [
+        { sala: "Sala 101 - Bloco A", curso: "Informática", prof: "Prof. Carlos Silva", status: "Em Uso" },
+        { sala: "Sala 102 - Bloco A", curso: "Administração", prof: "Prof. Ricardo Santos", status: "Em Uso" },
+        { sala: "Lab. Informática I", curso: "Jogos Digitais", prof: "Prof. Lucas Lima", status: "Em Uso" },
+        { sala: "Lab. Eletrônica", curso: "EletroEletrônica", prof: "Prof. Fernando Costa", status: "Em Uso" },
+        { sala: "Auditório Central", curso: "- Nenhum -", prof: "- Livre -", status: "Disponível" }
+    ];
+
+    let mapaHTML = "";
+    salasCampus.forEach(item => {
+        // Estiliza o status dependendo se a sala está ocupada ou não
+        const classeStatus = item.status === "Em Uso" ? "color: #2e7d32; font-weight: bold;" : "color: #666; font-style: italic;";
+        
+        mapaHTML += `
+            <tr>
+                <td><strong>${item.sala}</strong></td>
+                <td>${item.curso}</td>
+                <td>${item.prof}</td>
+                <td style="${classeStatus}">${item.status}</td>
+            </tr>
+        `;
+    });
+
+    corpoMapa.innerHTML = mapaHTML;
 }
