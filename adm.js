@@ -1,12 +1,28 @@
 // adm.js
 
-// Verifica o acesso e configura o cabeçalho/logout através do comum.js
 verificarAcesso('Servidor');
 configurarBotaoSair();
 
-// Executa as configurações do formulário e contadores assim que o HTML carregar
 document.addEventListener("DOMContentLoaded", () => {
     atualizarContadorProfessores();
+    
+    // Controle de abrir e fechar a janela flutuante (Modal)
+    const modal = document.getElementById("modalProf");
+    const btnAbrir = document.getElementById("btnAbrirCadastro");
+    const btnFechar = document.getElementById("btnFecharCadastro");
+
+    if (btnAbrir && modal && btnFechar) {
+        btnAbrir.addEventListener("click", () => {
+            modal.style.display = "flex"; 
+        });
+        btnFechar.addEventListener("click", () => {
+            modal.style.display = "none";  
+            document.getElementById("msgCadastro").textContent = ""; 
+        });
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) modal.style.display = "none"; 
+        });
+    }
     
     const formCadastro = document.getElementById("formCadastroProfessor");
     if (formCadastro) {
@@ -18,42 +34,28 @@ document.addEventListener("DOMContentLoaded", () => {
             const turma = document.getElementById("cadTurma").value;
             const msgCadastro = document.getElementById("msgCadastro");
 
-            // Busca os professores já salvos ou cria uma lista nova vazia
             let professores = JSON.parse(localStorage.getItem("professores") || "[]");
 
-            // Evita cadastrar duas pessoas com a mesma matrícula
             if (professores.some(p => p.matricula === matricula)) {
                 msgCadastro.textContent = "Erro: Esta matrícula já está cadastrada!";
                 msgCadastro.style.color = "#ff4d4d";
                 return;
             }
 
-            // Adiciona o novo professor à lista
-            professores.push({ 
-                nome: nome, 
-                matricula: matricula, 
-                turma: turma
-            });
-            
-            // Grava de volta no localStorage
+            professores.push({ nome: nome, matricula: matricula, turma: turma });
             localStorage.setItem("professores", JSON.stringify(professores));
 
-            // Mostra mensagem de sucesso e limpa os campos digitados
             msgCadastro.textContent = `Professor ${nome} cadastrado com sucesso!`;
             msgCadastro.style.color = "#28a745";
             formCadastro.reset();
-            
-            // Atualiza o contador de professores cadastrados no card do topo
             atualizarContadorProfessores();
         });
     }
 });
 
-// Função para atualizar o número de professores cadastrados no card do painel
 function atualizarContadorProfessores() {
     const professores = JSON.parse(localStorage.getItem("professores") || "[]");
     const cards = document.querySelectorAll(".card-numero");
-    // Altera o segundo card do seu layout ("Professores cadastrados")
     if (cards && cards[1]) {
         cards[1].textContent = professores.length;
     }
@@ -99,7 +101,7 @@ document.getElementById('formImportar').addEventListener('submit', function(e) {
                 }
 
                 novasLinhas.push({
-                    hora: WebKitCSSMatrix = linha.querySelector("hora").textContent.trim(),
+                    hora: linha.querySelector("hora").textContent.trim(),
                     seg: formatarCampo("segunda"),
                     ter: formatarCampo("terca"),
                     qua: formatarCampo("quarta"),
