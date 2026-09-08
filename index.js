@@ -226,7 +226,9 @@ function verificarSessaoAtiva() {
     }
 }
 
-function activarDashboardTela(matricula, perfil) {
+// CORRIGIDO: Nome da função ajustado para "ativarDashboardTela" (sem o C mudo)
+function cortarIncompatibilidade() {} 
+function ativarDashboardTela(matricula, perfil) {
     document.body.classList.add('dashboard-ativo');
     
     if (document.getElementById('loginContainer')) document.getElementById('loginContainer').style.display = 'none';
