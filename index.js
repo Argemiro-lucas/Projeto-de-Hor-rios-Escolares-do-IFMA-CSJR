@@ -86,7 +86,9 @@ const bancoHorariosPadrao = {
     }
 };
 
+// =========================================================================
 // 2. CARREGAMENTO DOS DADOS ATRAVÉS DO LOCALSTORAGE DO SISTEMA
+// =========================================================================
 let bancoHorarios;
 const dadosSalvos = localStorage.getItem('bancoHorarios');
 if (dadosSalvos) {
@@ -95,7 +97,10 @@ if (dadosSalvos) {
     bancoHorarios = bancoHorariosPadrao;
     localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
 }
-// 3. FUNÇÃO DE RE-RENDERIZAÇÃO ADAPTATIVA: Combina Curso, Semestre e o Turno para exibir dados únicos
+
+// =========================================================================
+// 3. FUNÇÃO DE RE-RENDERIZAÇÃO ADAPTATIVA: Garante a leitura de todos os turnos
+// =========================================================================
 function carregarTabelaHorarios(curso, semestre, turno) {
     const corpoTabela = document.getElementById('corpoTabelaHorarios');
     const tituloGrade = document.getElementById('tituloGrade');
@@ -118,7 +123,7 @@ function carregarTabelaHorarios(curso, semestre, turno) {
 
     const dadosSemestre = bancoHorarios[curso][semestre];
 
-    // A. Fluxo Primário: Se for uma Array direta (vinda de importação de arquivos)
+    // A. Fluxo Primário: Se for uma Array direta (vinda de importação de arquivos XML)
     if (Array.isArray(dadosSemestre)) {
         dadosSemestre.forEach(linha => {
             const tr = document.createElement('tr');
@@ -128,7 +133,7 @@ function carregarTabelaHorarios(curso, semestre, turno) {
         return;
     }
 
-    // B. Fluxo Secundário: Lê a estrutura do banco padrão diferenciada por turno
+    // B. Fluxo Secundário: Lê a estrutura do banco padrão diferenciada por turno ('manha', 'tarde', 'noite')
     if (dadosSemestre[turno] && Array.isArray(dadosSemestre[turno])) {
         dadosSemestre[turno].forEach(linha => {
             const tr = document.createElement('tr');
@@ -139,7 +144,10 @@ function carregarTabelaHorarios(curso, semestre, turno) {
         corpoTabela.innerHTML = `<tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado para essa combinação.</td></tr>`;
     }
 }
+
+// =========================================================================
 // 4. FUNÇÃO DE DISPARO INTERNO DOS EVENTOS DA TELA DO PORTAL
+// =========================================================================
 function atualizarVisualizacao() {
     const filtroCurso = document.getElementById('filtroCurso');
     const filtroSemestre = document.getElementById('filtroSemestre');
@@ -150,12 +158,20 @@ function atualizarVisualizacao() {
     }
 }
 
-// Vincula os escutadores nos 3 filtros do dashboard do aluno de forma segura
-if (document.getElementById('filtroCurso')) document.getElementById('filtroCurso').addEventListener('change', atualizarVisualizacao);
-if (document.getElementById('filtroSemestre')) document.getElementById('filtroSemestre').addEventListener('change', atualizarVisualizacao);
-if (document.getElementById('filtroTurno')) document.getElementById('filtroTurno').addEventListener('change', atualizarVisualizacao);
+// Vincula de maneira blindada os ouvintes nos 3 filtros assim que a página estiver pronta
+document.addEventListener("DOMContentLoaded", () => {
+    const fCurso = document.getElementById('filtroCurso');
+    const fSemestre = document.getElementById('filtroSemestre');
+    const fTurno = document.getElementById('filtroTurno');
 
+    if (fCurso) fCurso.addEventListener('change', atualizarVisualizacao);
+    if (fSemestre) fSemestre.addEventListener('change', atualizarVisualizacao);
+    if (fTurno) fTurno.addEventListener('change', atualizarVisualizacao);
+});
+
+// =========================================================================
 // 5. EVENTO DE SUBMIT E VALIDAÇÃO DE PERFIL COM BASE NAS REGRAS DO SUAP
+// =========================================================================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', function(event) {
@@ -176,7 +192,7 @@ if (loginForm) {
         if (matricula.startsWith("20")) perfil = "Aluno";
         else if (matricula.startsWith("10")) perfil = "Professor";
         else if (matricula.startsWith("00")) perfil = "Servidor";
-               // Validação de segurança em paralelo baseada na memória permanente de professores
+        
         if (perfil === 'Professor') {
             const professoresCadastrados = JSON.parse(localStorage.getItem('professores') || '[]');
             const profExistente = professoresCadastrados.find(p => p.matricula === matricula);
@@ -189,7 +205,6 @@ if (loginForm) {
             sessionStorage.setItem('nomeProfessorLogado', profExistente.nome);
         }
         
-        // Grava as informações exigidas pelo seu comum.js
         sessionStorage.setItem('matricula', matricula);
         sessionStorage.setItem('perfil', perfil);
         
@@ -205,13 +220,19 @@ if (loginForm) {
         ativarDashboardTela(matricula, perfil);
     });
 }
-
-// NOVA FUNÇÃO: Gerencia a persistência da sessão do Servidor na página de visualização
+// =========================================================================
+// 6. GERENCIAMENTO, TRAVAS DE PERFIL E PERSISTÊNCIA DA SESSÃO ATIVA
+// =========================================================================
 function verificarSessaoAtiva() {
     const matriculaSalva = sessionStorage.getItem('matricula');
     const perfilSalvo = sessionStorage.getItem('perfil');
 
     if (matriculaSalva && perfilSalvo) {
+        // Bloqueio rígido: Professor não entra no index.html dos alunos
+        if (perfilSalvo === 'Professor') {
+            window.location.href = 'professor.html';
+            return;
+        }
         ativarDashboardTela(matriculaSalva, perfilSalvo);
     }
 }
@@ -224,7 +245,7 @@ function ativarDashboardTela(matricula, perfil) {
     if (document.getElementById('dashMatricula')) document.getElementById('dashMatricula').textContent = matricula;
     if (document.getElementById('dashPerfil')) document.getElementById('dashPerfil').textContent = perfil;
     
-    // Adiciona um aviso visual no topo da tabela se for o Servidor
+    // Adiciona o aviso visual no topo da tabela se for o Servidor
     if (perfil === "Servidor") {
         const gradeContainer = document.querySelector('.grade-container-branca');
         if (gradeContainer && !document.getElementById('avisoEdicao')) {
@@ -237,34 +258,30 @@ function ativarDashboardTela(matricula, perfil) {
     }
 
     atualizarVisualizacao();
-    ativarEdicaoAoVivo();
+    ativarEdicaoAoVivo(); 
 }
 
-// NOVA FUNÇÃO: Monitora e torna a tabela editável caso o usuário seja o Servidor
-function activarEdicaoAoVivo() {
+// Torna todas as células de matérias editáveis em tempo real para o Servidor
+function ativarEdicaoAoVivo() {
     const perfil = sessionStorage.getItem('perfil');
     if (perfil !== "Servidor") return;
 
     const materiasCells = document.querySelectorAll('#corpoTabelaHorarios td.materia');
     
-    materiasCells.forEach((celula, celulaIndex) => {
-        // Habilita a edição direta pelo teclado
+    materiasCells.forEach((celula) => {
         celula.contentEditable = "true";
         celula.style.cursor = "pointer";
-        celula.style.backgroundColor = "#fffde7"; // Tom levemente amarelado para indicar bloco editável
+        celula.style.backgroundColor = "#fffde7"; 
 
-        // Salva a alteração assim que o Servidor clica fora da célula (blur)
         celula.addEventListener('blur', function() {
             const curso = document.getElementById('filtroCurso').value;
             const semestre = document.getElementById('filtroSemestre').value;
             const turno = document.getElementById('filtroTurno').value;
             
-            // Descobre qual linha da tabela (index) corresponde à alteração
             const trPai = this.parentElement;
             const todasAsLinhas = Array.from(document.querySelectorAll('#corpoTabelaHorarios tr'));
             const linhaIndex = todasAsLinhas.indexOf(trPai);
 
-            // Mapeia qual dia da semana foi editado com base na posição da coluna td
             const colunas = Array.from(trPai.querySelectorAll('td'));
             const colIndex = colunas.indexOf(this);
             const diasSemana = ['hora', 'seg', 'ter', 'qua', 'qui', 'sex'];
@@ -273,35 +290,33 @@ function activarEdicaoAoVivo() {
             if (bancoHorarios[curso] && bancoHorarios[curso][semestre]) {
                 const dadosSemestre = bancoHorarios[curso][semestre];
                 
-                // Grava o novo HTML digitado no banco de dados local
                 if (Array.isArray(dadosSemestre)) {
                     dadosSemestre[linhaIndex][diaEditado] = this.innerHTML;
                 } else if (dadosSemestre[turno]) {
                     dadosSemestre[turno][linhaIndex][diaEditado] = this.innerHTML;
                 }
 
-                // Atualiza o banco e salva permanentemente no LocalStorage
                 localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
             }
         });
     });
 }
 
-// Adiciona um gatilho para re-aplicar os eventos de edição toda vez que o Servidor mudar de curso/turno nos filtros
-const filtros = ['filtroCurso', 'filtroSemestre', 'filtroTurno'];
-filtros.forEach(id => {
+// Adiciona um gatilho para re-aplicar os eventos de edição toda vez que o Servidor mudar de filtro
+const filtrosIds = ['filtroCurso', 'filtroSemestre', 'filtroTurno'];
+filtrosIds.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
         el.addEventListener('change', () => {
-            setTimeout(ativarEdicaoAoVivo, 50); // Delay curto para esperar a tabela renderizar as novas matérias
+            setTimeout(ativarEdicaoAoVivo, 50); 
         });
     }
 });
 
-// Inicializa a verificação automática de sessão ao carregar
+// EXECUÇÃO INICIAL GLOBAL: Força o disparo do sistema ao abrir a página
 verificarSessaoAtiva();
 
-// Chamada protegida da função externa de logout
+// Chamada protegida do botão de Sair vinda de comum.js
 if (typeof configurarBotaoSair === "function") {
     configurarBotaoSair();
 }
