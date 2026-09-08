@@ -78,14 +78,14 @@ body {
     overflow: hidden !important;
     padding: 0 24px !important;
     opacity: 0 !important;
-    display: block !important; /* Sobrescreve o display:none do style.css */
+    display: block !important; 
     transition: max-height 0.3s ease-out, padding 0.3s ease, opacity 0.2s ease;
     color: var(--cinza-texto);
 }
 
 /* GATILHO QUE O JAVASCRIPT ATIVA PARA ABRIR O PAINEL */
 #blocoServidor.conteudo-retratil.aberto {
-    max-height: 500px !important; /* Permite expandir o conteúdo */
+    max-height: 600px !important; 
     padding: 10px 24px 24px 24px !important;
     opacity: 1 !important;
 }
@@ -99,24 +99,56 @@ body {
     color: var(--cinza-secundario);
     margin-bottom: var(--espaco-md);
     font-size: 14px;
+    width: 100%;
 }
 
 .secao-gerencial-btn {
     margin-bottom: var(--espaco-md);
+    width: 100%;
 }
 
 .divisor-painel {
     height: 1px;
     background-color: var(--cinza-borda);
     margin: var(--espaco-md) 0;
+    width: 100%;
 }
 
-#blocoServidor form, #blocoServidor .exportar-selecao {
+/* --- CORREÇÃO TÉCNICA: CAIXAS INVISÍVEIS DO PORTAL DO SERVIDOR --- */
+#blocoServidor form, 
+#blocoServidor .exportar-selecao {
     margin-top: var(--espaco-sm);
     display: flex;
     align-items: center;
     gap: var(--espaco-sm);
     flex-wrap: wrap;
+}
+
+/* Força os textos explicativos fora do modal a ficarem cinza escuro */
+#blocoServidor label {
+    color: var(--cinza-texto) !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    margin-bottom: 0 !important;
+}
+
+/* Força os inputs de arquivos e selects a ficarem visíveis com bordas nítidas */
+#blocoServidor input[type="file"],
+#blocoServidor select {
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    border: 1px solid #cccccc !important; 
+    background-color: #ffffff !important;
+    color: var(--cinza-texto) !important;
+    font-size: 13px !important;
+    height: 38px !important;
+    outline: none !important;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+#blocoServidor input[type="file"] {
+    background-color: #f8f9fa !important;
+    cursor: pointer;
 }
 
 #blocoServidor button {
@@ -128,24 +160,19 @@ body {
     cursor: pointer;
     font-weight: bold;
     font-size: 13px;
+    height: 38px;
+    transition: background-color 0.2s;
 }
 
 #blocoServidor button:hover {
     background-color: var(--verde-escuro-hover);
 }
 
-#blocoServidor select {
-    padding: 6px 10px;
-    border-radius: 4px;
-    border: 1px solid var(--cinza-borda);
-    background-color: var(--branco);
-    color: var(--cinza-texto);
-}
-
 #statusImportacao {
     font-size: 13px;
     font-weight: bold;
     width: 100%;
+    margin-top: var(--espaco-xs);
 }
 
 .botoes-sync {
@@ -231,7 +258,6 @@ body {
     margin-bottom: var(--espaco-sm);
 }
 
-/* CORREÇÃO DO TEXTO INVISÍVEL: Força rótulos escuros e legíveis sobre fundo branco */
 .modal-cadastro .campo-grupo label {
     display: block !important;
     color: var(--cinza-texto) !important; 
@@ -240,7 +266,6 @@ body {
     margin-bottom: var(--espaco-xs) !important;
 }
 
-/* CORREÇÃO DO TEXTO INVISÍVEL: Força cor contrastante para os dados digitados e opções */
 .modal-cadastro .campo-grupo input[type="text"], 
 .modal-cadastro .campo-grupo select {
     width: 100% !important; 
@@ -254,7 +279,6 @@ body {
     box-sizing: border-box !important;
 }
 
-/* Ajuste fino nos placeholders (textos de exemplo dentro das caixas) */
 .modal-cadastro .campo-grupo input::placeholder {
     color: var(--cinza-secundario) !important;
     opacity: 0.8;
@@ -294,7 +318,6 @@ body {
     font-weight: bold;
 }
 
-/* NOVO: Estilo exclusivo para o botão de cadastro manual (Desvinculado do Spinner Sync) */
 .btn-cadastro-manual {
     background-color: var(--verde-tabela);
     color: var(--branco);
@@ -316,15 +339,13 @@ body {
     .botoes-sync { flex-direction: column; }
 }
 
-/* Animação de rotação (Spinner) para simular carregamento */
 @keyframes girarSUAP {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Classe aplicada temporariamente ao botão durante o clique */
 .sincronizando-suap {
-    pointer-events: none; /* Impede cliques repetidos */
+    pointer-events: none; 
     opacity: 0.7;
     position: relative;
 }
