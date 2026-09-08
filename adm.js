@@ -65,6 +65,38 @@ document.addEventListener("DOMContentLoaded", () => {
             atualizarContadorProfessores();
         });
     }
+
+    // =========================================================================
+    // T5.2: LOGICA DE SINCRONIZAÇÃO COMPARTILHADA DO SUAP (COM ANIMAÇÃO)
+    // =========================================================================
+    const botoesSync = document.querySelectorAll(".btn-sync");
+    const statusSyncTexto = document.querySelector(".sync-status em");
+
+    if (botoesSync) {
+        botoesSync.forEach(botao => {
+            botao.addEventListener("click", function() {
+                // Impede disparos simultâneos caso já esteja rodando uma sincronização
+                if (this.classList.contains("sincronizando-suap")) return;
+
+                const textoOriginal = this.textContent;
+                this.classList.add("sincronizando-suap");
+                this.textContent = "Sincronizando...";
+
+                // Simula o delay de requisição da API do SUAP (2 segundos)
+                setTimeout(() => {
+                    this.classList.remove("sincronizando-suap");
+                    this.textContent = textoOriginal;
+                    
+                    // Atualiza dinamicamente o marcador temporal com a hora local atual
+                    if (statusSyncTexto) {
+                        const agora = new Date();
+                        statusSyncTexto.textContent = agora.toLocaleDateString('pt-BR') + " às " + agora.toLocaleTimeString('pt-BR');
+                    }
+                    alert("Dados integrados e sincronizados com o SUAP!");
+                }, 2000);
+            });
+        });
+    }
 });
 
 function atualizarContadorProfessores() {
