@@ -1,6 +1,6 @@
-// index.js
-
-// 1. BANCO DE DADOS PADRÃO REVISADO E FORMATADO (INFORMATICA, ELETRO, ADM E JOGOS)
+// =========================================================================
+// 1. BANCO DE DADOS PADRÃO (INFORMATICA, ELETRO, ADM E JOGOS)
+// =========================================================================
 const bancoHorariosPadrao = {
     informatica: {
         atual: {
@@ -86,7 +86,9 @@ const bancoHorariosPadrao = {
     }
 };
 
-// 2. CARREGAMENTO DOS DADOS ATRAVÉS DO LOCALSTORAGE DO SISTEMA
+// =========================================================================
+// 2. CARREGAMENTO DOS DADOS VIA LOCALSTORAGE
+// =========================================================================
 let bancoHorarios;
 const dadosSalvos = localStorage.getItem('bancoHorarios');
 if (dadosSalvos) {
@@ -95,7 +97,10 @@ if (dadosSalvos) {
     bancoHorarios = bancoHorariosPadrao;
     localStorage.setItem('bancoHorarios', JSON.stringify(bancoHorarios));
 }
-// 3. FUNÇÃO DE RE-RENDERIZAÇÃO ADAPTATIVA: Garante a leitura de todos os turnos
+
+// =========================================================================
+// 3. FUNÇÃO DE RE-RENDERIZAÇÃO DA TABELA
+// =========================================================================
 function carregarTabelaHorarios(curso, semestre, turno) {
     const corpoTabela = document.getElementById('corpoTabelaHorarios');
     const tituloGrade = document.getElementById('tituloGrade');
@@ -118,7 +123,6 @@ function carregarTabelaHorarios(curso, semestre, turno) {
 
     const dadosSemestre = bancoHorarios[curso][semestre];
 
-    // A. Fluxo Primário: Se for uma Array direta (vinda de importação de arquivos XML)
     if (Array.isArray(dadosSemestre)) {
         dadosSemestre.forEach(linha => {
             const tr = document.createElement('tr');
@@ -128,7 +132,6 @@ function carregarTabelaHorarios(curso, semestre, turno) {
         return;
     }
 
-    // B. Fluxo Secundário: Lê a estrutura do banco padrão diferenciada por turno ('manha', 'tarde', 'noite')
     if (dadosSemestre[turno] && Array.isArray(dadosSemestre[turno])) {
         dadosSemestre[turno].forEach(linha => {
             const tr = document.createElement('tr');
@@ -139,7 +142,10 @@ function carregarTabelaHorarios(curso, semestre, turno) {
         corpoTabela.innerHTML = `<tr><td colspan="6" style="color: red; padding: 20px;">Nenhum horário cadastrado para essa combinação.</td></tr>`;
     }
 }
-// 4. FUNÇÃO DE DISPARO INTERNO DOS EVENTOS DA TELA DO PORTAL
+
+// =========================================================================
+// 4. ATUALIZAÇÃO VISUAL DOS FILTROS
+// =========================================================================
 function atualizarVisualizacao() {
     const filtroCurso = document.getElementById('filtroCurso');
     const filtroSemestre = document.getElementById('filtroSemestre');
@@ -150,7 +156,6 @@ function atualizarVisualizacao() {
     }
 }
 
-// Vincula de maneira blindada os ouvintes nos 3 filtros assim que a página estiver pronta
 document.addEventListener("DOMContentLoaded", () => {
     const fCurso = document.getElementById('filtroCurso');
     const fSemestre = document.getElementById('filtroSemestre');
@@ -160,64 +165,64 @@ document.addEventListener("DOMContentLoaded", () => {
     if (fSemestre) fSemestre.addEventListener('change', atualizarVisualizacao);
     if (fTurno) fTurno.addEventListener('change', atualizarVisualizacao);
 });
-// 5. EVENTO DE SUBMIT E VALIDAÇÃO DE PERFIL COM BASE NAS REGRAS DO SUAP
+
+// =========================================================================
+// 5. EVENTO SUBMIT INTEGRADOC OM API EXPRESS (ETAPA 12 DO TUTORIAL)
+// =========================================================================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const matricula = document.getElementById('matricula').value.trim();
-        const senha = document.getElementById('senha').value;
+    loginForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Impede o recarregamento da página[cite: 10, 12]
+        
+        const matricula = document.getElementById('matricula').value.trim(); //[cite: 10, 12]
+        const senha = document.getElementById('senha').value; //[cite: 10, 12]
         const msgErro = document.getElementById('msgErro');
-        
-        if (!senha || senha.trim().length < 4) {
-            msgErro.textContent = "Matrícula ou senha incorreta no SUAP.";
-            msgErro.style.display = "block";
-            return;
-        }
-        
-        msgErro.style.display = "none";
-        let perfil = "Aluno";
-        
-        if (matricula.startsWith("20")) perfil = "Aluno";
-        else if (matricula.startsWith("10")) perfil = "Professor";
-        else if (matricula.startsWith("00")) perfil = "Servidor";
-        
-        if (perfil === 'Professor') {
-            const professoresCadastrados = JSON.parse(localStorage.getItem('professores') || '[]');
-            const profExistente = professoresCadastrados.find(p => p.matricula === matricula);
-            
-            if (!profExistente) {
-                msgErro.textContent = "Acesso negado: Este professor não foi cadastrado pelo Administrador.";
+
+        try {
+            // Envia a requisição POST com fetch() para a rota /api/login no Node.js[cite: 27, 28]
+            const resposta = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome: matricula, senha: senha })
+            });
+
+            const resultado = await resposta.json(); //[cite: 27]
+
+            if (resposta.ok) {
+                // Sucesso na verificação do banco de dados MySQL
+                msgErro.style.display = "none";
+                
+                sessionStorage.setItem('matricula', resultado.matricula || matricula);
+                sessionStorage.setItem('perfil', resultado.perfil || 'Aluno');
+
+                // Redireciona conforme o perfil retornado pelo servidor
+                if (resultado.perfil === 'Professor') {
+                    window.location.href = 'professor.html';
+                } else if (resultado.perfil === 'Servidor') {
+                    window.location.href = 'adm.html';
+                } else {
+                    ativarDashboardTela(matricula, resultado.perfil);
+                }
+            } else {
+                // Exibe a mensagem de erro retornada pelo servidor (ex: status 401)[cite: 26]
+                msgErro.textContent = resultado.erro || "Matrícula ou senha incorreta no SUAP.";
                 msgErro.style.display = "block";
-                return;
             }
-            sessionStorage.setItem('nomeProfessorLogado', profExistente.nome);
+        } catch (erro) {
+            msgErro.textContent = "Erro ao conectar com o servidor Node.js.";
+            msgErro.style.display = "block";
         }
-        
-        sessionStorage.setItem('matricula', matricula);
-        sessionStorage.setItem('perfil', perfil);
-        
-        if (perfil === 'Professor') {
-            window.location.href = 'professor.html';
-            return;
-        }
-        if (perfil === 'Servidor') {
-            window.location.href = 'adm.html';
-            return;
-        }
-        
-        ativarDashboardTela(matricula, perfil);
     });
 }
+
 // =========================================================================
-// 6. GERENCIAMENTO, TRAVAS DE PERFIL E PERSISTÊNCIA DA SESSÃO ATIVA
+// 6. GERENCIAMENTO E PERSISTÊNCIA DA SESSÃO ATIVA
 // =========================================================================
 function verificarSessaoAtiva() {
     const matriculaSalva = sessionStorage.getItem('matricula');
     const perfilSalvo = sessionStorage.getItem('perfil');
 
     if (matriculaSalva && perfilSalvo) {
-        // Bloqueio rígido: Professor não entra no index.html dos alunos
         if (perfilSalvo === 'Professor') {
             window.location.href = 'professor.html';
             return;
@@ -226,8 +231,6 @@ function verificarSessaoAtiva() {
     }
 }
 
-// CORRIGIDO: Nome da função ajustado para "ativarDashboardTela" (sem o C mudo)
-function cortarIncompatibilidade() {} 
 function ativarDashboardTela(matricula, perfil) {
     document.body.classList.add('dashboard-ativo');
     
@@ -236,14 +239,13 @@ function ativarDashboardTela(matricula, perfil) {
     if (document.getElementById('dashMatricula')) document.getElementById('dashMatricula').textContent = matricula;
     if (document.getElementById('dashPerfil')) document.getElementById('dashPerfil').textContent = perfil;
     
-    // Adiciona o aviso visual informativo na tela se for o Servidor
     if (perfil === "Servidor") {
         const gradeContainer = document.querySelector('.grade-container-branca');
         if (gradeContainer && !document.getElementById('avisoEdicao')) {
             const aviso = document.createElement('div');
             aviso.id = 'avisoEdicao';
             aviso.style.cssText = "background:#e8f5e9; color:#2e7d32; padding:10px; border-radius:6px; margin-bottom:15px; font-weight:bold; font-size:13px; border:1px solid #a5d6a7;";
-            aviso.innerHTML = "📝 Modo de Visualização do Servidor Ativo: Você está visualizando a grade horária com permissões de administrador.";
+            aviso.innerHTML = "📝 Modo de Visualização do Servidor Ativo: Você está a visualizar a grade horária com permissões de administrador.";
             gradeContainer.insertBefore(aviso, gradeContainer.firstChild);
         }
     }
@@ -251,10 +253,8 @@ function ativarDashboardTela(matricula, perfil) {
     atualizarVisualizacao();
 }
 
-// EXECUÇÃO INICIAL GLOBAL: Força o disparo do sistema ao abrir a página
 verificarSessaoAtiva();
 
-// Chamada protegida do botão de Sair vinda de comum.js
 if (typeof configurarBotaoSair === "function") {
     configurarBotaoSair();
 }
